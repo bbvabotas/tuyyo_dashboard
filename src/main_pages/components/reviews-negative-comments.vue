@@ -4,16 +4,11 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
-                <div class="page_header">
-                    <h3>Negative App Reviews Analysis (rating of 1 - 2)</h3>
-                </div>
-                <div class="page_header">
-                    <span><img class="icon_size icon_active" :src="icons.iconAndroid"></span>
-                    <span><img class="icon_size" :src="icons.iconIOS"></span>
-                </div>
+                <h3>Negative Review Analysis (rating of 1 - 2)</h3>
             </div>
         </div>
-        <hr>
+        
+<!--
         <div class="row">
             <div class="col-sm-12">
                 <div><strong>Date Range:</strong></div>
@@ -21,14 +16,15 @@
 
             </div>
         </div>
+-->
         <div class="row">
-            <div class="col-sm-6" style="text-align:center;">
+            <div class="col-sm-12" style="text-align:center;">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>
+                        <h4>
                             <span>{{ NumberOfOneStarReviews + NumberOfTwoStarReviews }}</span> out of
                             <span class="a_total_review_count">{{ reviewData.length }}</span> reviews are negative
-                        </h3>
+                        </h4>
                         <div class="progress" style="margin:20px 0">
                             <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" style="width:45%">
                                 {{ (((NumberOfOneStarReviews + NumberOfTwoStarReviews) / reviewData.length) * 100).toFixed(0) }}%
@@ -96,7 +92,6 @@
                                                     <td>{{ word.word }}</td>
                                                 </tr>
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
@@ -105,7 +100,7 @@
                                         <div class="col-sm-12">
                                             <div>Add a word:</div>
                                             <br>
-                                            <input type="text" style="width:100px; border: 1px solid gray" v-model="addWord">
+                                            <input type="text" style="width:50%; border: 1px solid gray" v-model="addWord">
                                             <button class="btn btn-default" @click="addWordToWordFrequencyList">Add</button>
                                         </div>
 
@@ -121,67 +116,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6">
-                <h3>Negative Reviews</h3>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="table_search_box">Search Reviews: <input style="width:200px;" type="text" name="query" v-model="query"></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div style="text-align:right"><i class="fa fa-download fa-2x export_button" title="Download to CSV" @click="exportDataToCSV()"></i></div>
-                    </div>
-                </div>
-                <table class="table table-bordered comments_table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div>Date</div>
-                                <div class="header_option" @click="sortDate">Sort</div>
-                            </th>
-                            <th>
-                                <div>Reviews ( {{ tableFilter.length }} showing )</div>
-                                <div>
-                                    <span class="header_option" @click="changeLanguage('english')" v-bind:class="{ highlight_language_selection: language == 'english'}">English</span>
-                                    <span> - </span>
-                                    <span class="header_option" @click="changeLanguage('spanish')" v-bind:class="{ highlight_language_selection: language == 'spanish'}">Spanish</span>
-                                </div>
-
-                            </th>
-                            <th>
-                                <div>Rating</div>
-                                <div class="header_option" @click="sortRating">Sort</div>
-                            </th>
-                        </tr>
-                    </thead>
-
-
-                </table>
-                <div class="comments_table_wrapper">
-                    <table class="table table-striped table-bordered table-hover comments_table">
-                        <tbody>
-                            <tr v-for="item in tableFilter" v-bind:class="{ disable_row: item.isDisabled }">
-                                <td>{{ item.date }}</td>
-                                <td style="text-align:left">
-                                    <div v-if="language == 'english'">
-                                        <div v-if="item.english_subject != ''">
-                                            <strong>{{ item.english_subject }}</strong> <br>
-                                        </div>
-                                        {{ item.english }}
-                                    </div>
-                                    <div v-else>
-                                        <div v-if="item.spanish_subject != ''">
-                                            <strong>{{ item.spanish_subject }}</strong> <br>
-                                        </div>
-                                        {{ item.spanish }}
-                                    </div>
-                                </td>
-                                <td>{{ item.rating }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -404,7 +338,8 @@
                     },
                     startDate: start,
                     endDate: end,
-                    maxDate: moment()
+                    maxDate: moment(),
+                    alwaysShowCalendars: true
                 }, displayDate);
 
                 displayDate(start, end);
@@ -482,7 +417,7 @@
 <style scoped>
     
     .word_frequency_table_wrapper {
-        width: 90%;
+        width: 60%;
         margin: 10px auto;
 /*
         border: 1px solid gray;
@@ -493,6 +428,7 @@
 
     .word_frequency_table {
         margin: 0;
+/*        width: 50%;*/
     }
 
     .word_frequency_table td:nth-child(1){

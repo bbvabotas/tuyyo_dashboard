@@ -4,113 +4,99 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
-                <div class="page_header">
-                    <h3>App Store Reviews</h3>
-                </div>
-                <div class="page_header">
-                    <span><img class="icon_size icon_active" :src="icons.iconAndroid"></span>
-                    <span><img class="icon_size" :src="icons.iconIOS"></span>
-                </div>
+                <h3>Reviews</h3>
             </div>
         </div>
-        <hr>
+        
         <div class="row">
             <div class="col-sm-12">
 
                 <div class="row">
                     <div class="col-md-12">
-
-                        <br>
-                        <div class="row">
-                        <div class="col-sm-12">
-                                <div><strong>Date Range:</strong></div>
-                                <div id="date_range" class="date_range_wrapper"></div>
-
-                            </div>
-                        </div>
-                        <br>
                         <div class="row">
                             <div class="col-sm-12">
                                 Average Review Rating <br> <strong>{{ averageRatingNum }}</strong>
                             </div>
                         </div>
                         <br>
-                        <div>
-                            <div class="info_subtitle">
-                                Disable any of the reviews below to toggle their rating effectiveness. Doing so will remove the comment's rating from the Average Review Rating to see what the score would look like without the comment. The "New Average Review Rating" will automatically update.
-                                <br><br> Example: Disable comments with a 1 or 2 rating that mention technical issues. Then you can see what your score would be if those issues wern't there.
-                            </div>
-                            <div class="row" style="margin: 20px 0">
-                                <div class="col-md-6">
-                                    Disabled Reviews <br> <strong>{{ disabledNum }} / {{ reviewData.length }}</strong>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="info_subtitle">
+                                    Disable any of the reviews below to toggle their rating effectiveness. Doing so will remove the comment's rating from the Average Review Rating to see what the score would look like without the comment. The "New Average Review Rating" will automatically update.
+                                    <br><br> Example: Disable comments with a 1 or 2 rating that mention technical issues. Then you can see what your score would be if those issues wern't there.
                                 </div>
-                                <div class="col-md-6">
-                                    New Average Review Rating <br> <strong>{{ averageNumChange }}</strong>
+                                <div class="row" style="margin: 20px 0">
+                                    <div class="col-sm-6">
+                                        <div>Disabled Reviews <br> <strong>{{ disabledNum }} / {{ reviewData.length }}</strong></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div>New Average Review Rating <br> <strong>{{ averageNumChange }}</strong></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="table_search_box">Search Reviews: <input style="width:200px;" type="text" name="query" v-model="query"></div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="table_search_box">Search Reviews: <input style="width:200px;" type="text" name="query" v-model="query"></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div style="text-align:right"><i class="fa fa-download fa-2x export_button" title="Download to CSV" @click="exportDataToCSV()"></i></div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div style="text-align:right"><i class="fa fa-download fa-2x export_button" title="Download to CSV" @click="exportDataToCSV()"></i></div>
-                                </div>
-                            </div>
 
-                            <table class="table table-bordered comments_table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div>Disable</div>
-                                            <div class="header_option" @click="enableAllComments">Enable All</div>
-                                        </th>
-                                        <th>
-                                            <div>Date</div>
-                                            <div class="header_option" @click="sortDate">Sort</div>
-                                        </th>
-                                        <th>
-                                            <div>Reviews ( {{ tableFilter.length }} showing )</div>
-                                            <div>
-                                                <span class="header_option" @click="changeLanguage('english')" v-bind:class="{ highlight_language_selection: language == 'english'}">English</span>
-                                                <span> - </span>
-                                                <span class="header_option" @click="changeLanguage('spanish')" v-bind:class="{ highlight_language_selection: language == 'spanish'}">Spanish</span>
-                                            </div>
-
-                                        </th>
-                                        <th>
-                                            <div>Rating</div>
-                                            <div class="header_option" @click="sortRating">Sort</div>
-                                        </th>
-                                    </tr>
-                                </thead>
-
-
-                            </table>
-                            <div class="comments_table_wrapper">
-                                <table class="table table-striped table-bordered table-hover comments_table">
-                                    <tbody>
-                                        <tr v-for="item in tableFilter" v-bind:class="{disable_row: item.isDisabled}">
-
-                                            <td><input type="checkbox" v-model="item.isDisabled" @click="updateNumberOfDisabledComments(item)"></td>
-                                            <td>{{ item.date }}</td>
-                                            <td style="text-align:left">
-                                                <div v-if="language == 'english'">
-                                                    <div v-if="item.english_subject != ''">
-                                                        <strong>{{ item.english_subject }}</strong> <br>
-                                                    </div>
-                                                    {{ item.english }}
+                                <table class="table table-bordered comments_table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div>Disable</div>
+                                                <div class="header_option" @click="enableAllComments">Enable All</div>
+                                            </th>
+                                            <th>
+                                                <div>Date</div>
+                                                <div class="header_option" @click="sortDate">Sort</div>
+                                            </th>
+                                            <th>
+                                                <div>Reviews ( {{ tableFilter.length }} showing )</div>
+                                                <div>
+                                                    <span class="header_option" @click="changeLanguage('english')" v-bind:class="{ highlight_language_selection: language == 'english'}">English</span>
+                                                    <span> - </span>
+                                                    <span class="header_option" @click="changeLanguage('spanish')" v-bind:class="{ highlight_language_selection: language == 'spanish'}">Spanish</span>
                                                 </div>
-                                                <div v-else>
-                                                    <div v-if="item.spanish_subject != ''">
-                                                        <strong>{{ item.spanish_subject }}</strong> <br>
-                                                    </div>
-                                                    {{ item.spanish }}
-                                                </div>
-                                            </td>
-                                            <td>{{ item.rating }}</td>
+
+                                            </th>
+                                            <th>
+                                                <div>Rating</div>
+                                                <div class="header_option" @click="sortRating">Sort</div>
+                                            </th>
                                         </tr>
-                                    </tbody>
+                                    </thead>
+
+
                                 </table>
+                                <div class="comments_table_wrapper">
+                                    <table class="table table-striped table-bordered table-hover comments_table">
+                                        <tbody>
+                                            <tr v-for="item in tableFilter" v-bind:class="{disable_row: item.isDisabled}">
+
+                                                <td><input type="checkbox" v-model="item.isDisabled" @click="updateNumberOfDisabledComments(item)"></td>
+                                                <td>{{ item.date }}</td>
+                                                <td style="text-align:left">
+                                                    <div v-if="language == 'english'">
+                                                        <div v-if="item.english_subject != ''">
+                                                            <strong>{{ item.english_subject }}</strong> <br>
+                                                        </div>
+                                                        {{ item.english }}
+                                                    </div>
+                                                    <div v-else>
+                                                        <div v-if="item.spanish_subject != ''">
+                                                            <strong>{{ item.spanish_subject }}</strong> <br>
+                                                        </div>
+                                                        {{ item.spanish }}
+                                                    </div>
+                                                </td>
+                                                <td>{{ item.rating }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -339,7 +325,8 @@
                     },
                     startDate: start,
                     endDate: end,
-                    maxDate: moment()
+                    maxDate: moment(),
+                    alwaysShowCalendars: true
                 }, displayDate);
 
                 displayDate(start, end);

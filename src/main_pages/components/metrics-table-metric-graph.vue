@@ -15,6 +15,17 @@
         methods:{
             calculateOptions(){
                 let this_data = this.chart_data;
+                //console.log(this_data);
+                
+                let shift_color = '';
+                
+                if(this_data.shift >= 1.25){
+                    shift_color = 'green'
+                } else if (this_data.shift <= 0.75){
+                    shift_color = 'red'
+                } else {
+                    shift_color = '#7cb5ec'
+                }
                 
                 return {
                     chart: {
@@ -28,28 +39,101 @@
                     title: {
                         text: ''
                     },
+                    subtitle: {
+                        text: this_data.name  
+                    },
                     xAxis: {
-                        categories: ['Yesterday', 'Y - 1', 'Y - 2', 'Y - 3', 'Y - 4', 'Y - 5']
+                        categories: ['Shift', 'Yesterday', 'Y - 1', 'Y - 2', 'Y - 3', 'Y - 4', 'Y - 5']
                     },
-                    yAxis: {
-                        visible: false
-                    },
+                    yAxis: [{
+//                        plotLines:[{
+//                            value: this_data.avg,
+//                            color: 'black',
+//                            width: 2
+//                        }],
+                        title: {
+                            text: ''  
+                        },
+                        gridLineWidth: 0,
+                        labels: {
+                            enabled: false  
+                        }
+
+                    },{
+                        visible: false,
+                        opposite: true
+                    }],
                     tooltip: {
                         enabled: false
                     },
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            }
-                        }
-                    },
+//                    plotOptions: {
+//                        line: {
+//                            dataLabels: {
+//                                enabled: true
+//                            }
+//                        }
+//                    },
                     legend: {
-                        enabled: false
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        layout: 'vertical',
+                        labelFormat: '{name} ' + this_data.avg
                     },
                     series: [{
-                        name: 'USA',
-                        data: [4, 10, 3, 5, 2, 1]
+                        name: 'Shift',
+                        yAxis: 1,
+                        type: 'column',
+                        color: shift_color,
+                        data: [
+                            this_data.shift
+                        ],
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: true
+                        }
+                    },{
+                        name: 'Trend',
+                        color: '#7cb5ec',
+                        data: [
+                            null,
+                            this_data.yesterday,
+                            this_data.y_1,
+                            this_data.y_2,
+                            this_data.y_3,
+                            this_data.y_4,
+                            this_data.y_5
+                        ],
+                        dataLabels: {
+                            enabled: true
+                        },
+                        showInLegend: false
+                    },{
+                        name: 'avg',
+                        dashStyle: 'ShortDash',
+                        color: 'black',
+                        data: [
+                            null,
+                            null,
+                            this_data.avg,
+                            this_data.avg,
+                            this_data.avg,
+                            this_data.avg,
+                            this_data.avg
+                        ],
+                        datalabels: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        marker: {
+                            enabled: false
+                        },
+                        states: {
+                            hover: {
+                                enabled: false
+                            }
+                        }
                     }]
                 }
             }
@@ -60,5 +144,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    
+    .plot_line_width {
+        padding: 20px;
+    }
 </style>

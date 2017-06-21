@@ -1,6 +1,8 @@
 <template>
     <div class="landing">
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        <overview></overview>
+<!--
         <div class="row">
             <div class="col-sm-12">
                 <ul class="nav_sub">
@@ -15,10 +17,11 @@
         <div v-if="showMetrics">
             <div class="row">
                 <div class="col-sm-12">
-                    <metrics-table style="height: 465px"></metrics-table>
+                    <metrics-table></metrics-table>
                 </div>
             </div>
         </div>
+-->
     </div>
 </template>
 

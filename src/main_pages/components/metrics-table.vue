@@ -21,55 +21,64 @@
                     <th>
                         <div>Metric</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('name', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('name', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Shift</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('shift', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('shift', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Yesterday</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('yesterday', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('yesterday', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Y - 1</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('y_1', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('y_1', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Y - 2</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('y_2', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('y_2', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Y - 3</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('y_3', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('y_3', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Y - 4</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('y_4', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('y_4', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Y - 5</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('y_5', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('y_5', 'down')"></i>
                         </div>
                     </th>
                     <th>
                         <div>Avg</div>
                         <div>
-                            <span class="header_option">Sort</span>
+                            <i class="fa fa-chevron-circle-up hover_cursor" @click="sortColumn('avg', 'up')"></i>
+                            <i class="fa fa-chevron-circle-down hover_cursor" @click="sortColumn('avg', 'down')"></i>
                         </div>
                     </th>
                 </tr>
@@ -84,7 +93,15 @@
                             <tbody>
                                 <tr>
                                     <td @click="displayTrendGraph(item)" style="cursor:pointer">{{ item.name }}</td>
-                                    <td>{{ item.shift }}</td>
+                                    <td v-if="item.shift < 1.25 && item.shift > 0.75">
+                                        {{ item.shift }}
+                                    </td>
+                                    <td v-else-if="item.shift >= 1.25" style="background-color:green; color:white">
+                                        {{ item.shift }}
+                                    </td>
+                                    <td v-else-if="item.shift <= 0.75" style="background-color:red; color:white">
+                                        {{ item.shift }}
+                                    </td>
                                     <td>{{ item.yesterday }}</td>
                                     <td>{{ item.y_1 }}</td>
                                     <td>{{ item.y_2 }}</td>
@@ -96,10 +113,11 @@
                                 
                                 <tr v-if="item.showGraph" style="background-color:white">
                                     <td></td>
+<!--                                    <td></td>-->
                                     <td colspan="8">
 
-                                        <div style="width:75%; margin:auto;">
-                                            <metrics-table-metric-graph style="height:200px;"></metrics-table-metric-graph>
+                                        <div style="width:100%;">
+                                            <metrics-table-metric-graph :chart_data="item" style="height:150px;"></metrics-table-metric-graph>
                                         </div>
 
                                     </td>
@@ -122,32 +140,32 @@
         //name: 'metrics-table',
         props: ['table_data'],
         data() {
-            return {
+            return {                
                 query: '',
                 metrics: [
-                    {id:1, name:'Total Logins', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:2, name:'Logins By Android', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:3, name:'Logins By iOS', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:4, name:'Total Money Transfered', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:5, name:'Money Transfered Via ATM', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:6, name:'Money Transfered Via Cash Pickup', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:7, name:'Money Transfered Via Bank Transfer', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:8, name:'Total Transfers', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:9, name:'Transfers Via ATM', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:10, name:'Transfers Via Cash Pickup', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:11, name:'Transfers Via Bank Transfer', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:12, name:'Launches', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:13, name:'Crashes', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:14, name:'New Registrations', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:15, name:'First Time Transfers', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:16, name:'Repeat Transfers', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:17, name:'New Recipients Added', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:18, name:'Payment Methods Added', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:19, name:'Delivery Methods Added', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:20, name:'Successful Transactions', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:21, name:'Failed Transactions', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:22, name:'Errors', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
-                    {id:23, name:'Downloads', shift:0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:1, name:'Total Logins', shift:2.5, yesterday:20, y_1:10, y_2:12, y_3:4, y_4:7, y_5:9, avg:8, showGraph:false},
+                    {id:2, name:'Logins By Android', shift:3.4, yesterday:17, y_1:6, y_2:10, y_3:3, y_4:4, y_5:5, avg:5, showGraph:false},
+                    {id:3, name:'Logins By iOS', shift:0.5, yesterday:1, y_1:4, y_2:2, y_3:1, y_4:3, y_5:4, avg:2, showGraph:false},
+                    {id:4, name:'Total Money Transfered', shift:1.0, yesterday:1000, y_1:230, y_2:30, y_3:420, y_4:110, y_5:90, avg:120, showGraph:false},
+                    {id:5, name:'Money Transfered Via ATM', shift:1.2, yesterday:230, y_1:340, y_2:540, y_3:50, y_4:30, y_5:50, avg:340, showGraph:false},
+                    {id:6, name:'Money Transfered Via Cash Pickup', shift:0.8, yesterday:980, y_1:670, y_2:770, y_3:606, y_4:780, y_5:990, avg:890, showGraph:false},
+                    {id:7, name:'Money Transfered Via Bank Transfer', shift:0.9, yesterday:100, y_1:230, y_2:120, y_3:300, y_4:210, y_5:102, avg:110, showGraph:false},
+                    {id:8, name:'Total Transfers', shift:1.32, yesterday:98, y_1:78, y_2:87, y_3:76, y_4:87, y_5:67, avg:78, showGraph:false},
+                    {id:9, name:'Transfers Via ATM', shift:0.74, yesterday:12, y_1:21, y_2:11, y_3:21, y_4:13, y_5:12, avg:11, showGraph:false},
+                    {id:10, name:'Transfers Via Cash Pickup', shift:1.0, yesterday:34, y_1:43, y_2:54, y_3:34, y_4:33, y_5:44, avg:34, showGraph:false},
+                    {id:11, name:'Transfers Via Bank Transfer', shift:0.8, yesterday:12, y_1:22, y_2:16, y_3:15, y_4:5, y_5:21, avg:10, showGraph:false},
+                    {id:12, name:'Launches', shift:1.1, yesterday:56, y_1:76, y_2:43, y_3:23, y_4:32, y_5:43, avg:35, showGraph:false},
+                    {id:13, name:'Crashes', shift:1.2, yesterday:2, y_1:1, y_2:0, y_3:0, y_4:0, y_5:2, avg:1, showGraph:false},
+                    {id:14, name:'New Registrations', shift:2.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:15, name:'First Time Transfers', shift:0.9, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:16, name:'Repeat Transfers', shift:1.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:17, name:'New Recipients Added', shift:1.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:18, name:'Payment Methods Added', shift:1.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:19, name:'Delivery Methods Added', shift:0.85, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:20, name:'Successful Transactions', shift:1.9, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:21, name:'Failed Transactions', shift:1.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:22, name:'Errors', shift:1.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
+                    {id:23, name:'Downloads', shift:1.0, yesterday:0, y_1:0, y_2:0, y_3:0, y_4:0, y_5:0, avg:0, showGraph:false},
                 ]
             }
         },
@@ -180,6 +198,10 @@
                 this.downloadCSV(new_csv);
             },
             downloadCSV(csv) {
+                
+                //let object_test = [{"test": "things"}];
+                //let json_test = JSON.stringify(object_test);
+                
                 let blob = new Blob([csv]),
                     a = window.document.createElement("a");
                 
@@ -191,6 +213,38 @@
                 a.click();
                 
                 document.body.removeChild(a);
+                
+                
+            },
+            sortColumn(column, direction){
+                let list = this.metrics;
+                
+                if(column == 'name'){
+                    if(direction == 'up'){
+                        return list.sort(function(a,b){
+                            if(a.name < b.name) return -1;
+                            if(a.name > b.name) return 1;
+                            return 0;
+                        }); 
+                    } else if(direction == 'down'){
+                        return list.sort(function(a,b){
+                            if(a.name > b.name) return -1;
+                            if(a.name < b.name) return 1;
+                            return 0;
+                        }); 
+                    }                                        
+                } else {
+                    if(direction == 'up'){
+                        return list.sort(function(a,b){
+                            return a[column] - b[column];
+                        }); 
+                    } else if(direction == 'down'){
+                        return list.sort(function(a,b){
+                            return b[column] - a[column];
+                        }); 
+                    }
+                      
+                }                               
             }
         },
         components: {
@@ -213,7 +267,7 @@
     }
     .metrics_table th:nth-child(n+2):nth-child(-n+9) {
         width: 8%;
-        min-width: 100px;
+        min-width: 90px;
     }
     
     .metrics_table td {
@@ -223,31 +277,36 @@
     .metrics_table td:nth-child(n+2):nth-child(-n+9) {
         text-align: right;
         width: 8%;
-        min-width: 100px;
+        min-width: 90px;
     }
     
     .metrics_table tr {
         margin: 0;
         padding: 0;
     }
-    
     .metrics_table_wrapper {
-/*        height: 465px;*/
-        height: 100%;
+        height: 465px;
+/*        height: 100%;*/
         overflow-y: scroll;
     }
     
     .header_option {
+/*
         text-decoration: underline;
         font-weight: normal;
         color: blue;
+*/
         font-size: 0.8em;
     }
 
+/*
     .header_option:hover {
         cursor: pointer;
     }
-    
+*/
+    .hover_cursor:hover {
+        cursor: pointer;
+    }
     .metrics_search {
         width: 100%;
         text-align: left;

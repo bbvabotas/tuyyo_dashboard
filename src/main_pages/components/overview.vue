@@ -20,6 +20,12 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-12">
+                            <overview-live-data></overview-live-data>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
                             <div><strong>Date Range:</strong></div>
                             <div id="date_range" class="date_range_wrapper"></div>
                                 
@@ -71,6 +77,12 @@
                             <countries-mx></countries-mx>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <metrics-table></metrics-table>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -80,11 +92,13 @@
 </template>
 
 <script>
+    import OverviewLiveData from './overview-live-data'
     import DonutChart from './donut-chart.vue'
     import InfoBox from './info-box.vue'
     import CountriesUs from './countries-us.vue'
     import CountriesMx from './countries-mx.vue'
     import OverviewAppRating from './overview-app-rating.vue'
+    import MetricsTable from './metrics-table.vue'
     
     import moment from 'moment'
     import jquery from 'jquery'
@@ -179,7 +193,7 @@
                     end = moment().subtract(1, 'days');
 
                 function displayDate(start, end){                    
-                    jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down"></i></span>');
+                    jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>');
                 }
 
                 jquery("#date_range").daterangepicker({
@@ -193,7 +207,8 @@
                     },
                     startDate: start,
                     endDate: end,
-                    maxDate: moment()
+                    maxDate: moment(),
+                    alwaysShowCalendars: true
                 }, displayDate);
 
                 displayDate(start, end);
@@ -204,7 +219,9 @@
             InfoBox,
             CountriesUs,
             CountriesMx,
-            OverviewAppRating
+            OverviewAppRating,
+            OverviewLiveData,
+            MetricsTable
         }
     }
 
@@ -257,10 +274,8 @@
         background: #fff;
         cursor: pointer;
         padding: 5px 10px;
-/*
         border: 1px solid #ccc;
         border-radius: 5px;
-*/
         width: 300px;
         margin: auto;
         

@@ -1,5 +1,7 @@
 <template>
 <div class="customer-feedback">
+    <overall-app-rating></overall-app-rating>
+<!--
    <div class="row">
         <div class="col-sm-12">
             <ul class="nav_sub">
@@ -33,6 +35,7 @@
             </div>
         </div>
     </div>
+-->
     
 </div>
 </template>

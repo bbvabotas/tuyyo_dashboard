@@ -1,6 +1,7 @@
 <template>
 <div id="app">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<!--
     <div class="live_ticker">
         <div>Live (today)</div>
         <div style="white-space: nowrap;">
@@ -10,6 +11,7 @@
             </div>
         </div>
     </div>
+-->
     <div>
         <ul class="nav_main">
             <li>
@@ -53,7 +55,7 @@
     export default {
         name: 'app',
         mounted(){
-            this.liveData();  
+            //this.liveData();  
         },
         data() {
             return {

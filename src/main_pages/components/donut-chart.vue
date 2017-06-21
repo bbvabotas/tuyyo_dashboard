@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    
+    //import Highcharts-3d from 'highcharts-3d'
     export default {
         //name: 'donut-chart',
         props: ['chart_data'],
@@ -23,7 +23,13 @@
                         plotBackgroundColor: null,
                         plotBorderWidth: 0,
                         plotShadow: false,
-                        height: chart_height + 'px'
+                        height: chart_height + 'px',
+                        type: 'pie',
+                        options3d: {
+                            enabled: true,
+                            alpha: 45,
+                            beta: 0
+                        }
                     },
                     //colors: chart_colors,
                     title: {
@@ -37,6 +43,7 @@
                     },
                     plotOptions: {
                         pie: {
+                            depth: 35,
                             dataLabels: {
                                 enabled: true,
                                 distance: 0,
