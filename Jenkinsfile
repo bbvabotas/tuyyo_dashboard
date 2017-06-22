@@ -28,7 +28,7 @@ devAWSLogGroup ="pan-dev-alpha-tuyyodashboard-cluster-log-group"
 //qaAWSLogGroup = "qa2-tuyo-api-business-cluster-logs-group"
 
 taskTemplateFileName = "tuyyo_dashboard_task"
-localImage = "bts-global-payment/tuyyo-dashboard1:latest";
+localImage = "bts-global-payment/tuyyo-dashboard:latest";
 
 /********** Properties **********/
 /* Only keep the 10 most recent builds. */
@@ -80,7 +80,7 @@ node('global') {
                 /*------------------------------------------------------------------------------*/
                 stage name: 'Docker Build'
                 /*------------------------------------------------------------------------------*/
-                sh "docker rmi \$(docker images -a -q)"
+                sh "docker images | grep \"${dockerRepo}\" | awk '{print \$3}' | xargs docker rmi"
 
                 sh "docker build -t ${localImage} ."
 
