@@ -28,7 +28,7 @@ devAWSLogGroup ="pan-dev-alpha-tuyyodashboard-cluster-log-group"
 //qaAWSLogGroup = "qa2-tuyo-api-business-cluster-logs-group"
 
 taskTemplateFileName = "tuyyo_dashboard_task"
-localImage = "bts-global-payment/tuyyo-dashboard:latest";
+localImage = "bts-global-payment/tuyyo-dashboard1:latest";
 
 /********** Properties **********/
 /* Only keep the 10 most recent builds. */
