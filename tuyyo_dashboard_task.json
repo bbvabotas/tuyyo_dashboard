@@ -16,14 +16,6 @@
     "command": [
       "/bin/bash -c \"/usr/local/bin/npm install && /usr/local/bin/npm run dev\""
     ],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "%AWS_LOG_GROUP%",
-        "awslogs-region": "%AWS_REGION%",
-        "awslogs-stream-prefix": "tuyyo-dashboard"
-      }
-    },
     "cpu": 0
   }]
 }
