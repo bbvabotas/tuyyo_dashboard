@@ -80,7 +80,7 @@ node('global') {
                 /*------------------------------------------------------------------------------*/
                 stage name: 'Docker Build'
                 /*------------------------------------------------------------------------------*/
-                sh "docker images | grep \"${dockerRepo}\" | awk '{print \$3}' | xargs docker rmi"
+                sh "docker images | grep \"${dockerRepo}\" | awk '{print \$3}' | xargs docker rmi -f"
 
                 sh "docker build -t ${localImage} ."
 
