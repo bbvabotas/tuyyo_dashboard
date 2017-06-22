@@ -4,7 +4,7 @@
   "containerDefinitions": [{
     "memory": 990,
     "portMappings": [{
-      "hostPort": 8080,
+      "hostPort": 80,
       "containerPort": 8080,
       "protocol": "tcp"
     }],
