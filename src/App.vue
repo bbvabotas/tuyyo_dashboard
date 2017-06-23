@@ -15,7 +15,7 @@
     <div>
         <ul class="nav_main">
             <li>
-                <div><img :src="images.logoSrc"></div>
+                <div><img src="~@/assets/logo.png" /></div>
             </li>
             <li>
                 <div>Tuyyo Dashboard</div>
@@ -39,29 +39,29 @@
 <!--                <div><i class="fa fa-exclamation-circle fa-2x"></i><br>Errors</div>-->
             </li>
         </ul>
-        
+
     </div>
     <router-view></router-view>
-    
+
 </div>
 </template>
 
 <script>
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
-    
-    
-    
+
+
+
     export default {
         name: 'app',
         mounted(){
-            //this.liveData();  
+            //this.liveData();
         },
         data() {
             return {
-                images: {
-                    logoSrc: require("assets/img/logo.png")
-                },
+       //         images: {
+       //             logoSrc: require("./src/assets/img/logo.png")
+       //         },
                 liveTransfers: 2,
                 liveTransfersString: '2',
                 liveTransferAmount: 50,
@@ -97,26 +97,26 @@
         color: #2c3e50;
         background-color: white;
     }
-    
+
     img {
         height: 40px;
     }
-    
+
     .nav_main a {
         text-decoration: none;
     }
-    
+
     .nav_main a:hover {
 /*        color: #b6bec8;*/
         color: white;
     }
-    
+
     .nav_main {
         list-style-type: none;
         background-color: #072146;
         text-align: left;
     }
-    
+
     .nav_main li {
         display: inline-block;
         color: white;
@@ -124,11 +124,11 @@
         vertical-align: middle;
         padding: 10px 15px;
     }
-    
+
     .active-page {
         color: white;
     }
-    
+
     .live_ticker {
         position: absolute;
         z-index: 10;
@@ -142,14 +142,14 @@
 /*        border: 1px solid white;*/
         padding: 10px 20px;
     }
-    
+
     .ticker_item {
 /*        margin-right: 20px;*/
         display: inline-block;
         width: 200px;
         overflow: hidden;
     }
-    
+
     @keyframes example {
         from {
             left: 0;
@@ -159,7 +159,7 @@
             left: -202%;
         }
     }
-    
+
     .ticker_animation {
         position: absolute;
         animation-name: example;

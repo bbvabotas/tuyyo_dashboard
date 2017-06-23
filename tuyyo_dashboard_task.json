@@ -10,12 +10,7 @@
     }],
     "essential": true,
     "name": "tuyyo-dashboard",
-    "environment": [],
-    "workingDirectory": "/etc/tuyyo-dashboard",
     "image": "52.210.54.51:5000/%IMAGE_NAME%",
-    "command": [
-      "/bin/bash","-c" ,"/usr/local/bin/npm install ; /usr/local/bin/npm run dev"
-    ],
     "cpu": 0
   }]
 }

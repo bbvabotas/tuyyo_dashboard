@@ -1,13 +1,13 @@
-FROM node:6
+FROM node:boron
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+# Install the app dependencies
+COPY package.json /usr/src/app/
+RUN npm install
 
-RUN mkdir /etc/tuyyo-dashboard
+# Bundle app source
+COPY . /usr/src/app
 
-
-COPY $PWD/static /etc/tuyyo-dashboard/static
-COPY $PWD/config /etc/tuyyo-dashboard/config
-COPY $PWD/build /etc/tuyyo-dashboard/build
-COPY $PWD/test /etc/tuyyo-dashboard/test
-COPY $PWD/src /etc/tuyyo-dashboard/src
-
-COPY $PWD/.babelrc .eslintrc.js .postcssrc.js index.html .eslintignore package.json test.html /etc/tuyyo-dashboard/
-
+EXPOSE 8080
+CMD ["npm", "run", "dev"]
