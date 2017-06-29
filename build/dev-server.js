@@ -38,7 +38,7 @@ var influx = new Influx.InfluxDB({
 influx.getDatabaseNames()
   .then(names => {
     if (names.includes('TUYO')) {
-      console.log('Found it') ;
+      console.log('Connected to Influx DB') ;
     }
   })
   .catch(err => {
@@ -93,6 +93,20 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
+
+//API to get logins
+app.get('/logins', function (req, res) {
+  influx.query(`
+    SELECT COUNT(userId) FROM OUT
+    where serviceId='API' AND operation='/api/auth/authenticate' AND responseCode='TUYO-0000'
+    GROUP BY os
+  `).then(result => {
+    res.json(result)
+  }).catch(err => {
+    res.status(500).send(err.stack)
+  })
+})
+
 var uri = 'http://localhost:' + port
 
 var _resolve
@@ -108,8 +122,8 @@ devMiddleware.waitUntilValid(() => {
 //    opn(uri)
 //  }
   _resolve()
-    
-    
+
+
 })
 
 var server = app.listen(port)
