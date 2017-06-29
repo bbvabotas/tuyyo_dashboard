@@ -15,23 +15,13 @@
         methods:{
             calculateOptions(){
                 let this_data = this.chart_data;
-                //console.log(this_data);
                 
-                let shift_color = '';
-                
-                if(this_data.shift >= 1.25){
-                    shift_color = 'green'
-                } else if (this_data.shift <= 0.75){
-                    shift_color = 'red'
-                } else {
-                    shift_color = '#7cb5ec'
-                }
                 
                 return {
                     chart: {
                         type: 'line',
                         spacingRight: 2,
-                        spacingLeft: 2
+                        spacingLeft: 2                        
                     },
                     credits: {
                         enabled: false
@@ -43,9 +33,10 @@
                         text: this_data.name  
                     },
                     xAxis: {
-                        categories: ['Shift', 'Yesterday', 'Y - 1', 'Y - 2', 'Y - 3', 'Y - 4', 'Y - 5']
+                        categories: ['Yesterday', 'Y - 1', 'Y - 2', 'Y - 3', 'Y - 4', 'Y - 5']
+                        //offset: -20
                     },
-                    yAxis: [{
+                    yAxis: {
 //                        plotLines:[{
 //                            value: this_data.avg,
 //                            color: 'black',
@@ -58,44 +49,21 @@
                         labels: {
                             enabled: false  
                         }
-
-                    },{
-                        visible: false,
-                        opposite: true
-                    }],
+                    },
                     tooltip: {
                         enabled: false
                     },
-//                    plotOptions: {
-//                        line: {
-//                            dataLabels: {
-//                                enabled: true
-//                            }
-//                        }
-//                    },
                     legend: {
                         verticalAlign: 'middle',
                         align: 'right',
                         layout: 'vertical',
-                        labelFormat: '{name} ' + this_data.avg
+                        labelFormat: '<div style="text-align:center">{name}<br>(' + this_data.avg + ')</div>',
+                        useHTML: true
                     },
                     series: [{
-                        name: 'Shift',
-                        yAxis: 1,
-                        type: 'column',
-                        color: shift_color,
-                        data: [
-                            this_data.shift
-                        ],
-                        showInLegend: false,
-                        dataLabels: {
-                            enabled: true
-                        }
-                    },{
                         name: 'Trend',
                         color: '#7cb5ec',
-                        data: [
-                            null,
+                        data: [                            
                             this_data.yesterday,
                             this_data.y_1,
                             this_data.y_2,
@@ -112,7 +80,6 @@
                         dashStyle: 'ShortDash',
                         color: 'black',
                         data: [
-                            null,
                             null,
                             this_data.avg,
                             this_data.avg,

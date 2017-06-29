@@ -3,10 +3,14 @@
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
             <div class="row">
                 <div class="col-sm-12">
-
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>Overview</h3>
+                            <button class="btn btn-default" @click="post">Post test</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>App Ratings</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -20,10 +24,15 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-12">
+                            <h3>Stats</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
                             <overview-live-data></overview-live-data>
                         </div>
                     </div>
-                    <hr>
+<!--                    <hr>-->
                     <div class="row">
                         <div class="col-sm-12">
                             <div><strong>Date Range:</strong></div>
@@ -83,7 +92,7 @@
                             <metrics-table></metrics-table>
                         </div>
                     </div>
-
+                    <hr>
                 </div>
             </div>
         
@@ -104,9 +113,14 @@
     import jquery from 'jquery'
     import daterangepicker from 'daterangepicker'
     
+    import axios from 'axios'
+    
+    
+    
     export default {
         mounted() {
             this.dateRange();
+            this.appStore();
         },
         data() {
             return {
@@ -168,26 +182,36 @@
                             y: 913
                         }, {
                             name: 'Bank Transfer',
-                            y: 913
+                            y: 510
                         }]
                     },
                     amountTransferedData: {
                         name: 'Transfer Amount',
                         data: [{
                             name: 'ATM Pickup',
-                            y: 245
+                            y: 2045
                         }, {
                             name: 'Cash Pickup',
-                            y: 913
+                            y: 9130
                         }, {
                             name: 'Bank Transfer',
-                            y: 913
+                            y: 1134
                         }]
                     }
                 }
             }
         },
         methods: {
+            appStore(){
+//                axios.get(`http://jsonplaceholder.typicode.com/posts`)
+//                .then(response => {
+//                  // JSON responses are automatically parsed.
+//                  this.posts = response.data
+//                })
+//                .catch(e => {
+//                  this.errors.push(e)
+//                })
+            },
             dateRange(){
                 let start = moment().subtract(8, 'days'),
                     end = moment().subtract(1, 'days');
@@ -212,6 +236,32 @@
                 }, displayDate);
 
                 displayDate(start, end);
+            },
+            post(){
+                console.log('post');
+                
+                let json_data = {};
+                
+                axios.post("http://192.168.126.220:8080/job/glomo-android-mx/build", json_data, { 
+                    headers: {
+                        "Jenkins-Crumb" : "5a6ac7387d7e7805802c4351e84a028c"
+                        
+                    },
+                    data: {
+                        token: "muYAMPitK2G16aRjfA6WWndCJZIqbVvW"
+                    },
+                    user: {
+                        bbva: "206ac6f47c184c2445a40e538794380c"
+                    }
+                    //"data token" : "muYAMPitK2G16aRjfA6WWndCJZIqbVvW",
+                    //"user bbva" : "206ac6f47c184c2445a40e538794380c"
+                })
+                .then(response => {
+                    console.log('yeah!')
+                })
+                .catch(e => {
+                    console.log(e)
+                })                
             }
         },
         components: {

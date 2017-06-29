@@ -22,6 +22,33 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
+
+
+
+var Influx = require('influx')
+
+var influx = new Influx.InfluxDB({
+  host: '10.0.1.160',
+  database: 'TUYO',
+   port: 8086,
+    username: 'influxapi',
+    password: 'P5fsE9ftsgRfnGhN',
+})
+
+influx.getDatabaseNames()
+  .then(names => {
+    if (names.includes('TUYO')) {
+      console.log('Found it') ;
+    }
+  })
+  .catch(err => {
+  console.log(err);
+    console.log(`Error getting Influx database!`);
+  })
+
+
+
+
 var app = express()
 var compiler = webpack(webpackConfig)
 
@@ -75,10 +102,12 @@ console.log('> Starting dev server...')
 devMiddleware.waitUntilValid(() => {
   console.log('> Listening at ' + uri + '\n')
   // when env is testing, don't need open it
-  if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
-    opn(uri)
-  }
+//  if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
+//    opn(uri)
+//  }
   _resolve()
+    
+    
 })
 
 var server = app.listen(port)
@@ -89,3 +118,6 @@ module.exports = {
     server.close()
   }
 }
+
+
+//console.log('test');

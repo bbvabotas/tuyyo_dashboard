@@ -2,20 +2,33 @@
 <div class="row">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <div class="col-sm-12">
+<!--
         <div class="row">
             <div class="col-sm-12">
-                <h3>Reviews</h3>
+                <h4>Reviews</h4>
             </div>
         </div>
+-->
         
         <div class="row">
             <div class="col-sm-12">
-
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
+                        <div class="rating_needle_wrapper">
+                            <div><img class="rating_gauge" :src="images.ratingGauge"></div>
+                            <div><img class="rating_needle_set" :src="images.ratingNeedleSet"></div>
+                            <div><img class="rating_needle_new" :src="images.ratingNeedleNew"></div>
+                            <div class="avg_rating_set">2.9</div>
+                            <div class="avg_rating_new">modified:<br>2.9</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
                         <div class="row">
                             <div class="col-sm-12">
-                                Average Review Rating <br> <strong>{{ averageRatingNum }}</strong>
+                                <ratings-gauge :rating_data="averageRatingNum" style="height:300px"></ratings-gauge>
+<!--                                Average Review Rating <br> <strong>{{ averageRatingNum }}</strong>-->
                             </div>
                         </div>
                         <br>
@@ -33,15 +46,23 @@
                                         <div>New Average Review Rating <br> <strong>{{ averageNumChange }}</strong></div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-12">
                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="table_search_box">Search Reviews: <input style="width:200px;" type="text" name="query" v-model="query"></div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div style="text-align:right"><i class="fa fa-download fa-2x export_button" title="Download to CSV" @click="exportDataToCSV()"></i></div>
-                                    </div>
-                                </div>
-
+                            <div class="col-sm-6">
+                                <div class="table_search_box">Search Reviews: <input style="width:200px;" type="text" name="query" v-model="query"></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div style="text-align:right"><i class="fa fa-download fa-2x export_button" title="Download to CSV" @click="exportDataToCSV()"></i></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
                                 <table class="table table-bordered comments_table">
                                     <thead>
                                         <tr>
@@ -99,6 +120,8 @@
                                 </div>
                             </div>
                         </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,6 +137,8 @@
     import jquery from 'jquery'
     import daterangepicker from 'daterangepicker'
     
+    import RatingsGauge from './ratings-gauge.vue'
+    
     export default {
         mounted: function () {
             this.getReviews();
@@ -128,7 +153,10 @@
                 },
                 images: {
                     oneStar: require("assets/img/star_1.png"),
-                    twoStar: require("assets/img/star_2.png")
+                    twoStar: require("assets/img/star_2.png"),
+                    ratingGauge: require("assets/img/rating_gauge.png"),
+                    ratingNeedleSet: require("assets/img/rating_needle_set.png"),
+                    ratingNeedleNew: require("assets/img/rating_needle_new.png")
                 },
                 query: '',
                 language: 'english',
@@ -460,7 +488,7 @@
             }
         },
         components: {
-            //DateRangePicker
+            RatingsGauge
         }
     }
 
@@ -599,6 +627,57 @@
         width: 300px;
         margin: auto;
         
+    }
+    .rating_needle_wrapper {
+        position: relative;
+        height: 300px;
+        width: 300px;
+        margin: auto;
+/*        border: 1px solid gray;*/
+    }
+    
+    .rating_gauge {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0; left: 0;
+    }
+    
+    .rating_needle_set {
+        height: 120px;
+        position: absolute;
+        top: 40px;
+        left: 142px;
+        z-index: 10;
+        transform: rotate(-120deg);
+        transform-origin: center 92%;
+    }
+    
+    .rating_needle_new {
+        height: 120px;
+        position: absolute;
+        z-index: 5;
+        top: 40px;
+        left: 142px;
+        transform: rotate(40deg);
+        transform-origin: center 92%;
+    }
+    
+    .avg_rating_set {
+        position: absolute;
+        font-size: 40px;
+        font-weight: bold;
+        left: 40%;
+        top: 180px;
+    }
+    
+    .avg_rating_new {
+        position: absolute;
+        top: 240px;
+        font-size: 14px;
+        color: #595959;
+        left: 40%;
+        top: 230px;
     }
     
 </style>

@@ -39,7 +39,11 @@
                         text: this_data.name
                     }, credits: {enabled:false},
                     tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        headerFormat: '',
+                        pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+//                        formatter(){
+//                            return this
+//                        }
                     },
                     plotOptions: {
                         pie: {

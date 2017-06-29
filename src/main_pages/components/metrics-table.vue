@@ -113,11 +113,13 @@
                                 
                                 <tr v-if="item.showGraph" style="background-color:white">
                                     <td></td>
-<!--                                    <td></td>-->
-                                    <td colspan="8">
+                                    <td style="border-right:none">
+                                        <metrics-table-graph-shift :shift_data="item.shift" style="height:200px;"></metrics-table-graph-shift>
+                                    </td>
+                                    <td colspan="7" style="border-left:none">
 
                                         <div style="width:100%;">
-                                            <metrics-table-metric-graph :chart_data="item" style="height:150px;"></metrics-table-metric-graph>
+                                            <metrics-table-metric-graph :chart_data="item" style="height:200px;"></metrics-table-metric-graph>
                                         </div>
 
                                     </td>
@@ -136,6 +138,7 @@
 <script>
     import papaparse from 'papaparse'
     import MetricsTableMetricGraph from './metrics-table-metric-graph.vue'
+    import MetricsTableGraphShift from './metrics-table-graph-shift.vue'
     export default {
         //name: 'metrics-table',
         props: ['table_data'],
@@ -146,7 +149,7 @@
                     {id:1, name:'Total Logins', shift:2.5, yesterday:20, y_1:10, y_2:12, y_3:4, y_4:7, y_5:9, avg:8, showGraph:false},
                     {id:2, name:'Logins By Android', shift:3.4, yesterday:17, y_1:6, y_2:10, y_3:3, y_4:4, y_5:5, avg:5, showGraph:false},
                     {id:3, name:'Logins By iOS', shift:0.5, yesterday:1, y_1:4, y_2:2, y_3:1, y_4:3, y_5:4, avg:2, showGraph:false},
-                    {id:4, name:'Total Money Transfered', shift:1.0, yesterday:1000, y_1:230, y_2:30, y_3:420, y_4:110, y_5:90, avg:120, showGraph:false},
+                    {id:4, name:'Total Money Transfered', shift:1.0, yesterday:2120, y_1:1230, y_2:2310, y_3:1920, y_4:1910, y_5:2990, avg:2120, showGraph:false},
                     {id:5, name:'Money Transfered Via ATM', shift:1.2, yesterday:230, y_1:340, y_2:540, y_3:50, y_4:30, y_5:50, avg:340, showGraph:false},
                     {id:6, name:'Money Transfered Via Cash Pickup', shift:0.8, yesterday:980, y_1:670, y_2:770, y_3:606, y_4:780, y_5:990, avg:890, showGraph:false},
                     {id:7, name:'Money Transfered Via Bank Transfer', shift:0.9, yesterday:100, y_1:230, y_2:120, y_3:300, y_4:210, y_5:102, avg:110, showGraph:false},
@@ -248,7 +251,8 @@
             }
         },
         components: {
-            MetricsTableMetricGraph
+            MetricsTableMetricGraph,
+            MetricsTableGraphShift
         }
     }
 
@@ -285,9 +289,8 @@
         padding: 0;
     }
     .metrics_table_wrapper {
-        height: 465px;
-/*        height: 100%;*/
-        overflow-y: scroll;
+/*        height: 565px;*/
+/*        overflow-y: scroll;*/
     }
     
     .header_option {

@@ -9,8 +9,9 @@ import VueHighcharts from 'vue-highcharts'
 import Highcharts from 'highcharts/highstock'
 import loadMap from 'highcharts/modules/map'
 
+import highchartsMore from 'highcharts-more'
 
-
+highchartsMore(Highcharts)
 loadMap(Highcharts);
 Vue.use(VueHighcharts, { Highcharts });
 

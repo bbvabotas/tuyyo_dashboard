@@ -22,13 +22,30 @@
         <hr>
         <div class="row">
             <div class="col-sm-12">
-                <h3>App Store Reviews</h3>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>App Store Reviews</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span><img class="icon_size icon_active" :src="icons.iconAndroid"></span>
+                        <div style="display:inline-block">
+                            <div><strong>Date Range:</strong></div>
+                            <div id="date_range" class="date_range_wrapper"></div>
+                        </div>
+                        <span><img class="icon_size" :src="icons.iconIOS"></span>
+                    </div>
+                </div>
+                
+<!--
                 <div><strong>Date Range:</strong></div>
                 <div id="date_range" class="date_range_wrapper"></div>
                 <div>
                     <span><img class="icon_size icon_active" :src="icons.iconAndroid"></span>
                     <span><img class="icon_size" :src="icons.iconIOS"></span>
                 </div>
+-->
             </div>
         </div>
         <div class="row">
@@ -41,6 +58,7 @@
                 <reviews-negative-comments></reviews-negative-comments>
             </div>
         </div>
+        <hr>
     </div>
 </div>
     
@@ -129,6 +147,7 @@
     .icon_size {
         height: 60px;
         padding: 4px;
+        margin: 0 10px;
     }
     
     .icon_size:hover {

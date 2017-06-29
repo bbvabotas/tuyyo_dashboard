@@ -1,122 +1,123 @@
 <template>
 <div class="row">
-   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <div class="col-sm-12">
+        <!--
         <div class="row">
             <div class="col-sm-12">
-                <h3>Negative Review Analysis (rating of 1 - 2)</h3>
-            </div>
-        </div>
-        
-<!--
-        <div class="row">
-            <div class="col-sm-12">
-                <div><strong>Date Range:</strong></div>
-                <div id="date_range" class="date_range_wrapper"></div>
-
+                <h4>Negative Review Analysis (rating of 1 - 2)</h4>
             </div>
         </div>
 -->
         <div class="row">
             <div class="col-sm-12" style="text-align:center;">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <h4>
-                            <span>{{ NumberOfOneStarReviews + NumberOfTwoStarReviews }}</span> out of
-                            <span class="a_total_review_count">{{ reviewData.length }}</span> reviews are negative
-                        </h4>
-                        <div class="progress" style="margin:20px 0">
-                            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" style="width:45%">
-                                {{ (((NumberOfOneStarReviews + NumberOfTwoStarReviews) / reviewData.length) * 100).toFixed(0) }}%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-sm-6">
-                        <div><img :src="images.oneStar" class="star_img"></div>
-                        <br>
-                        <div>
-                            <div class="red neg_circle_sm">{{ ((NumberOfOneStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
-                            <br><br>
-                            <div>
-                                <span style="font-weight:bold">{{ NumberOfOneStarReviews }}</span> out of a total of
-                                <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are one star
-                            </div>
-                        </div>
-                        <br>
-                        <div><i>word frequency with review count</i></div>
-                        <div class="frequency_chart"></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div><img :src="images.twoStar" class="star_img"></div>
-                        <br>
-                        <div>
-                            <div class="orange neg_circle_sm">{{ ((NumberOfTwoStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
-                            <br><br>
-                            <div>
-                                <span style="font-weight:bold">{{ NumberOfTwoStarReviews }}</span> out of a total of
-                                <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are two stars
-                            </div>
-                        </div>
-                        <br>
-                        <div><i>word frequency with review count</i></div>
-                        <div class="frequency_chart"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="word_frequency_table_wrapper">
-                            <h3>Edit words to search for in the word frequency</h3>
-                            <div class="info_subtitle">
-                                Disable a word to remove it from the word frequency.
-                                <br><br> Each word will include variations of the word and is case in-sensitive.
-                                <br> Example: Searching for the word "log" will find a review with the word "log", "Log", "LoG", logs", "login", "logon", "logged", etc.
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <table class="table table-bordered word_frequency_table">
-                                        <thead>
-                                            <tr>
-                                                <td>Disable</td>
-                                                <td>Word</td>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    <div class="word_frequency_word_wrapper">
-                                        <table class="table table-bordered table-striped word_frequency_table">
-                                            <tbody>
-                                                <tr v-for="word in wordFrequencyWordList" v-bind:class="{ disable_row: word.isDisabled }">
-                                                    <td><input type="checkbox" v-model="word.isDisabled"></td>
-                                                    <td>{{ word.word }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="word_frequency_table_wrapper">
+                                    <h4>Edit words to search for in the word frequency</h4>
+                                    <div class="info_subtitle">
+                                        Disable a word to remove it from the word frequency.
+                                        <br><br> Each word will include variations of the word and is case in-sensitive.
+                                        <br> Example: Searching for the word "log" will find a review with the word "log", "Log", "LoG", logs", "login", "logon", "logged", etc.
                                     </div>
-                                </div>
-                                <div class="col-sm-6" style="position:relative; height:250px;">
+                                    <hr>
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <div>Add a word:</div>
-                                            <br>
-                                            <input type="text" style="width:50%; border: 1px solid gray" v-model="addWord">
-                                            <button class="btn btn-default" @click="addWordToWordFrequencyList">Add</button>
+                                        <div class="col-sm-6">
+                                            <table class="table table-bordered word_frequency_table">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Disable</td>
+                                                        <td>Word</td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            <div class="word_frequency_word_wrapper">
+                                                <table class="table table-bordered table-striped word_frequency_table">
+                                                    <tbody>
+                                                        <tr v-for="word in wordFrequencyWordList" v-bind:class="{ disable_row: word.isDisabled }">
+                                                            <td><input type="checkbox" v-model="word.isDisabled"></td>
+                                                            <td>{{ word.word }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
+                                        <div class="col-sm-6" style="position:relative; height:250px;">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>Add a word:</div>
+                                                    <br>
+                                                    <input type="text" style="width:50%; border: 1px solid gray" v-model="addWord">
+                                                    <button class="btn btn-default" @click="addWordToWordFrequencyList">Add</button>
+                                                </div>
 
 
-                                    </div>
+                                            </div>
 
-                                    <div class="row" style="position:absolute; bottom:0; width:100%;">
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-default">Apply</button>
+                                            <div class="row" style="position:absolute; bottom:0; width:100%;">
+                                                <div class="col-sm-12">
+                                                    <button class="btn btn-default">Apply</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>
+                                    <span>{{ NumberOfOneStarReviews + NumberOfTwoStarReviews }}</span> out of
+                                    <span class="a_total_review_count">{{ reviewData.length }}</span> reviews are negative
+                                </h4>
+                                <div class="progress" style="margin:20px 0">
+                                    <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" style="width:45%">
+                                        {{ (((NumberOfOneStarReviews + NumberOfTwoStarReviews) / reviewData.length) * 100).toFixed(0) }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div><img :src="images.oneStar" class="star_img"></div>
+                                <br>
+                                <div>
+                                    <div class="red neg_circle_sm">{{ ((NumberOfOneStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
+                                    <br><br>
+                                    <div>
+                                        <span style="font-weight:bold">{{ NumberOfOneStarReviews }}</span> out of a total of
+                                        <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are one star
+                                    </div>
+                                </div>
+                                <br>
+                                <div><i>word frequency with review count</i></div>
+                                <div class="frequency_chart"></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div><img :src="images.twoStar" class="star_img"></div>
+                                <br>
+                                <div>
+                                    <div class="orange neg_circle_sm">{{ ((NumberOfTwoStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
+                                    <br><br>
+                                    <div>
+                                        <span style="font-weight:bold">{{ NumberOfTwoStarReviews }}</span> out of a total of
+                                        <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are two stars
+                                    </div>
+                                </div>
+                                <br>
+                                <div><i>word frequency with review count</i></div>
+                                <div class="frequency_chart"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -417,13 +418,7 @@
 <style scoped>
     
     .word_frequency_table_wrapper {
-        width: 60%;
-        margin: 10px auto;
-/*
-        border: 1px solid gray;
-        border-radius: 5px;
-*/
-        padding: 10px;
+        width: 90%;
     }
 
     .word_frequency_table {
