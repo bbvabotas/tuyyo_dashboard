@@ -5,7 +5,7 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-12">
-                            <button class="btn btn-default" @click="post">Post test</button>
+                            <button class="btn btn-default" @click="getLogins">Get Logins</button>
                         </div>
                     </div>
                     <div class="row">
@@ -237,27 +237,12 @@
 
                 displayDate(start, end);
             },
-            post(){
-                console.log('post');
+            getLogins(){
+                console.log('getting logins...')
                 
-                let json_data = {};
-                
-                axios.post("http://192.168.126.220:8080/job/glomo-android-mx/build", json_data, { 
-                    headers: {
-                        "Jenkins-Crumb" : "5a6ac7387d7e7805802c4351e84a028c"
-                        
-                    },
-                    data: {
-                        token: "muYAMPitK2G16aRjfA6WWndCJZIqbVvW"
-                    },
-                    user: {
-                        bbva: "206ac6f47c184c2445a40e538794380c"
-                    }
-                    //"data token" : "muYAMPitK2G16aRjfA6WWndCJZIqbVvW",
-                    //"user bbva" : "206ac6f47c184c2445a40e538794380c"
-                })
+                axios.get('/logins')
                 .then(response => {
-                    console.log('yeah!')
+                    console.log(response)
                 })
                 .catch(e => {
                     console.log(e)

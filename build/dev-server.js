@@ -52,6 +52,8 @@ influx.getDatabaseNames()
 var app = express()
 var compiler = webpack(webpackConfig)
 
+app.get('/testing')
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
