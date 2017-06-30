@@ -6,6 +6,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-default" @click="getLogins">Get Logins</button>
+                            <button class="btn btn-default" @click="getActive">Get Active Customers</button>
+                            <button class="btn btn-default" @click="getTransfers">Get Transfers</button>
+                            <button class="btn btn-default" @click="getTransferAmount">Get Transfer Amount</button>
                         </div>
                     </div>
                     <div class="row">
@@ -238,9 +241,54 @@
                 displayDate(start, end);
             },
             getLogins(){
-                console.log('getting logins...')
+                //console.log('getting logins...')
+                var start = moment("06/18/2017").valueOf();
+                var end = moment("06/24/2017").valueOf();
                 
-                axios.get('/logins')
+                //console.log(start + ' to ' + end);
+                axios.get('/logins&start=' + start + '&end=' + end)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    console.log(e)
+                })                
+            },
+            getActive(){
+                //console.log('getting logins...')
+                var start = moment("06/18/2017").valueOf();
+                var end = moment("06/24/2017").valueOf();
+                
+                //console.log(start + ' to ' + end);
+                axios.get('/active&start=' + start + '&end=' + end)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    console.log(e)
+                })                
+            },
+            getTransfers(){
+                //console.log('getting logins...')
+                var start = moment("06/18/2017").valueOf();
+                var end = moment("06/24/2017").valueOf();
+                
+                //console.log(start + ' to ' + end);
+                axios.get('/transferCount&start=' + start + '&end=' + end)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    console.log(e)
+                })                
+            },
+            getTransferAmount(){
+                //console.log('getting logins...')
+                var start = moment("06/18/2017").valueOf();
+                var end = moment("06/24/2017").valueOf();
+                
+                //console.log(start + ' to ' + end);
+                axios.get('/transferAmount&start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
