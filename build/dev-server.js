@@ -99,8 +99,61 @@ app.get('/logins', function (req, res) {
   influx.query(`
     SELECT COUNT(userId) FROM OUT
     where serviceId='API' AND operation='/api/auth/authenticate' AND responseCode='TUYO-0000'
-    GROUP BY os
-  `).then(result => {
+    AND time>=`+req.query.start+` AND `+`time<=`+req.query.end +
+    ` GROUP BY os`
+  ).then(result => {
+    res.json(result)
+  }).catch(err => {
+    res.status(500).send(err.stack)
+  })
+})
+
+//API to get active users
+app.get('/active', function (req, res) {
+  influx.query(`
+    SELECT COUNT(DISTINCT(userId)) FROM OUT
+    where serviceId='API' AND (operation='/api/auth/authenticate' OR operation='/api/auth/createPassword') AND responseCode='TUYO-0000'
+    AND time>=`+req.query.start+` AND `+`time<=`+req.query.end
+  ).then(result => {
+    res.json(result)
+  }).catch(err => {
+    res.status(500).send(err.stack)
+  })
+})
+
+//API to get registered users
+app.get('/registrations', function (req, res) {
+  influx.query(`
+    SELECT COUNT(DISTINCT(userId)) FROM OUT
+    where serviceId='API' AND operation='/api/auth/createPassword' AND responseCode='TUYO-0000'
+    AND time>=`+req.query.start+` AND `+`time<=`+req.query.end
+  ).then(result => {
+    res.json(result)
+  }).catch(err => {
+    res.status(500).send(err.stack)
+  })
+})
+
+//API to get transferCount
+app.get('/transferCount', function (req, res) {
+  influx.query(`
+    SELECT count(fromAmount) FROM MONEY_TRANSFER
+    WHERE time>=`+req.query.start+` AND `+`time<=`+req.query.end +
+    ` GROUP BY deliveryMethod`
+  ).then(result => {
+    res.json(result)
+  }).catch(err => {
+    res.status(500).send(err.stack)
+  })
+})
+
+//API to get transfer amount
+app.get('/transferAmount', function (req, res) {
+  influx.query(`
+    SELECT sum(fromAmount) as totalFromAmount, sum(toAmount) as totalToAmount  FROM MONEY_TRANSFER
+    AND time>=`+req.query.start+` AND `+`time<=`+req.query.end +
+    `GROUP BY deliveryMethod`
+  ).then(result => {
     res.json(result)
   }).catch(err => {
     res.status(500).send(err.stack)
