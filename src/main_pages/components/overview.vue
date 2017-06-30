@@ -383,7 +383,7 @@
                     this_vm.start_date = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
                     this_vm.end_date = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
                     
-                    console.log(this_vm.start_date + ' to ' + this_vm.end_date);
+//                    console.log(this_vm.start_date + ' to ' + this_vm.end_date);
                     this_vm.getCustomerData(new_start_date, new_end_date)
                 });
                 
