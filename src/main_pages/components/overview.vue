@@ -275,19 +275,21 @@
                 let this_vm = this
                 axios.get('/registrations?start=' + start + '&end=' + end) //Get registration data
                 .then(response => {
-                    if(response.data.length == 0){
-                        this_vm.info_box_data.registeredCustomersData.val = 0;
-                    } else {
+                    if(response.data.length > 0){
                         this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
+                        
+                    } else {
+                        this_vm.info_box_data.registeredCustomersData.val = 0;
                     }
                     
                     
                     axios.get('/active?start=' + start + '&end=' + end) //Get active customer data
                     .then(response => {
-                        if(response.data.length == 0){
-                            this_vm.info_box_data.activeCustomersData.val = 0;
-                        } else {
+                        if(response.data.length > 0){
                             this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
+                        } else {
+                            
+                            this_vm.info_box_data.activeCustomersData.val = 0;
                         }
                         
                         axios.get('/transferCount?start=' + start + '&end=' + end) //Get transfer data
