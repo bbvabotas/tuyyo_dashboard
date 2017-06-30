@@ -151,7 +151,7 @@ app.get('/transferCount', function (req, res) {
 app.get('/transferAmount', function (req, res) {
   influx.query(`
     SELECT sum(fromAmount) as totalFromAmount, sum(toAmount) as totalToAmount  FROM MONEY_TRANSFER
-    AND time>=`+req.query.start+` AND `+`time<=`+req.query.end +
+    WHERE time>=`+req.query.start+` AND `+`time<=`+req.query.end +
     `GROUP BY deliveryMethod`
   ).then(result => {
     res.json(result)
