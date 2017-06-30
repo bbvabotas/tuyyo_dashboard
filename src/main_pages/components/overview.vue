@@ -128,8 +128,8 @@
         },
         data() {
             return {
-                startDate: '',
-                endDate: '',
+                start_date: '',
+                end_date: '',
                 icon: {
                     android: 'iconAndroid',
                     ios: 'iconIOS'
@@ -244,21 +244,23 @@
 
                 displayDate(start, end);
                 
+                let this_vm = this;
+                
                 jquery('#date_range').on('apply.daterangepicker', function(ev, picker) {
                   //do something, like clearing an input
                     
-                    this.startDate = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
-                    this.endDate = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
+                    this_vm.start_date = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
+                    this_vm.end_date = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
                     
-                    console.log(this.startDate + ' ' + this.endDate);
+                    console.log(this_vm.start_date + ' to ' + this_vm.end_date);
                 });
             },
             getLogins(){
                 //console.log('getting logins...')
-                var start = this.startDate
-                var end = this.endDate
+                var start = this.start_date
+                var end = this.end_date
                 
-                //console.log(start + ' to ' + end);
+                console.log(start + ' to ' + end);
                 axios.get('/logins?start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
@@ -269,8 +271,8 @@
             },
             getRegistrations(){
                 //console.log('getting logins...')
-                var start = this.startDate
-                var end = this.endDate
+                var start = this.start_date
+                var end = this.end_date
                 
                 //console.log(start + ' to ' + end);
                 axios.get('/registrations?start=' + start + '&end=' + end)
@@ -283,8 +285,8 @@
             },
             getActive(){
                 //console.log('getting logins...')
-                var start = this.startDate
-                var end = this.endDate
+                var start = this.start_date
+                var end = this.end_date
                 
                 //console.log(start + ' to ' + end);
                 axios.get('/active?start=' + start + '&end=' + end)
@@ -297,8 +299,8 @@
             },
             getTransfers(){
                 //console.log('getting logins...')
-                var start = this.startDate
-                var end = this.endDate
+                var start = this.start_date
+                var end = this.end_date
                 
                 //console.log(start + ' to ' + end);
                 axios.get('/transferCount?start=' + start + '&end=' + end)
@@ -311,8 +313,8 @@
             },
             getTransferAmount(){
                 //console.log('getting logins...')
-                var start = this.startDate
-                var end = this.endDate
+                var start = this.start_date
+                var end = this.end_date
                 
                 //console.log(start + ' to ' + end);
                 axios.get('/transferAmount?start=' + start + '&end=' + end)
