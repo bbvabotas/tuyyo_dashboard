@@ -275,7 +275,7 @@
                 let this_vm = this
                 axios.get('/registrations?start=' + start + '&end=' + end) //Get registration data
                 .then(response => {
-                    if(response.data[0].count == undefined){
+                    if(response.data.length > 0){
                         this_vm.info_box_data.registeredCustomersData.val = 0;
                     } else {
                         this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
@@ -284,7 +284,7 @@
                     
                     axios.get('/active?start=' + start + '&end=' + end) //Get active customer data
                     .then(response => {
-                        if(response.data[0].count == undefined){
+                        if(response.data.length > 0){
                             this_vm.info_box_data.activeCustomersData.val = 0;
                         } else {
                             this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
@@ -297,7 +297,7 @@
                             
                             console.log(response);
                             
-                            if(response.data != null){
+                            if(response.data.length > 0){
                                 atm_pickup = response.data[0].count
                                 cash_pickup = response.data[1].count
                                 bank_transfer = response.data[2].count
@@ -326,10 +326,10 @@
                             
                                 console.log(response);
                                 
-                                if(response.data != null){
-                                    atm_pickup = response.data[0].count
-                                    cash_pickup = response.data[1].count
-                                    bank_transfer = response.data[2].count
+                                if(response.data.length > 0){
+                                    atm_pickup = response.data[0].total_from_amount
+                                    cash_pickup = response.data[1].total_from_amount
+                                    bank_transfer = response.data[2].total_from_amount
                                 }
 //                                if(response.data[0].count != undefined){
 //                                    atm_pickup = response.data[0].count
@@ -341,7 +341,7 @@
 //                                    bank_transfer = response.data[2].count
 //                                }
 
-                                this_vm.info_box_data.amountTransferedData.val = '$' + (atm_pickup + cash_pickup + bank_transfer);
+                                this_vm.info_box_data.amountTransferedData.val = '$' + ((atm_pickup + cash_pickup + bank_transfer).toFixed(0));
                                 this_vm.donut_chart_data.amountTransferedData.data[0].y = atm_pickup; //atm pickup
                                 this_vm.donut_chart_data.amountTransferedData.data[1].y = cash_pickup; //cash pickup
                                 this_vm.donut_chart_data.amountTransferedData.data[2].y = bank_transfer; //bank transfer
