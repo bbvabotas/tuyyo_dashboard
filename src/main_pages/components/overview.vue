@@ -275,7 +275,7 @@
                 let this_vm = this
                 axios.get('/registrations?start=' + start + '&end=' + end) //Get registration data
                 .then(response => {
-                    if(response.data.length > 0){
+                    if(response.data.length == 0){
                         this_vm.info_box_data.registeredCustomersData.val = 0;
                     } else {
                         this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
@@ -284,7 +284,7 @@
                     
                     axios.get('/active?start=' + start + '&end=' + end) //Get active customer data
                     .then(response => {
-                        if(response.data.length > 0){
+                        if(response.data.length == 0){
                             this_vm.info_box_data.activeCustomersData.val = 0;
                         } else {
                             this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
@@ -365,18 +365,118 @@
                 })
                 .catch(e => {
                     console.log(e)
-                }) 
+                })
+                
+                
+                
+                
+//                axios.get('/registrations?start=' + start + '&end=' + end) //Get registration data
+//                .then(response => {
+//                    if(response.data.length > 0){
+//                        this_vm.info_box_data.registeredCustomersData.val = 0;
+//                    } else {
+//                        this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
+//                    }
+//                    
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                }) 
+//                
+//                axios.get('/active?start=' + start + '&end=' + end) //Get active customer data
+//                .then(response => {
+//                    if(response.data.length > 0){
+//                        this_vm.info_box_data.activeCustomersData.val = 0;
+//                    } else {
+//                        this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
+//                    }
+//
+//
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                }) 
+//                
+//                axios.get('/transferCount?start=' + start + '&end=' + end) //Get transfer data
+//                .then(response => {
+//
+//                    let atm_pickup = 0, cash_pickup = 0, bank_transfer = 0;
+//
+//                    console.log(response);
+//
+//                    if(response.data.length > 0){
+//                        atm_pickup = response.data[0].count
+//                        cash_pickup = response.data[1].count
+//                        bank_transfer = response.data[2].count
+//                    }
+//
+////                            if(response.data[0].count != undefined){
+////                                atm_pickup = response.data[0].count
+////                            }
+////                            if(response.data[1].count != undefined){
+////                                cash_pickup = response.data[1].count
+////                            }
+////                            if(response.data[2].count != undefined){
+////                                bank_transfer = response.data[2].count
+////                            }
+//
+//                    this_vm.info_box_data.transfersData.val = atm_pickup + cash_pickup + bank_transfer;
+//                    this_vm.donut_chart_data.transfersData.data[0].y = atm_pickup; //atm pickup
+//                    this_vm.donut_chart_data.transfersData.data[1].y = cash_pickup; //cash pickup
+//                    this_vm.donut_chart_data.transfersData.data[2].y = bank_transfer; //bank transfer
+//
+//                    console.log(this_vm.info_box_data.transfersData);
+//
+//                    this_vm.donut_chart_data.transfersData.loading_data = false;
+//
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                }) 
+//                
+//                axios.get('/transferAmount?start=' + start + '&end=' + end) //Get transfer amount data
+//                .then(response => {
+//                    let atm_pickup = 0, cash_pickup = 0, bank_transfer = 0;
+//
+//                    console.log(response);
+//
+//                    if(response.data.length > 0){
+//                        atm_pickup = response.data[0].total_from_amount
+//                        cash_pickup = response.data[1].total_from_amount
+//                        bank_transfer = response.data[2].total_from_amount
+//                    }
+////                                if(response.data[0].count != undefined){
+////                                    atm_pickup = response.data[0].count
+////                                }
+////                                if(response.data[1].count != undefined){
+////                                    cash_pickup = response.data[1].count
+////                                }
+////                                if(response.data[2].count != undefined){
+////                                    bank_transfer = response.data[2].count
+////                                }
+//
+//                    this_vm.info_box_data.amountTransferedData.val = '$' + ((atm_pickup + cash_pickup + bank_transfer).toFixed(0));
+//                    this_vm.donut_chart_data.amountTransferedData.data[0].y = atm_pickup; //atm pickup
+//                    this_vm.donut_chart_data.amountTransferedData.data[1].y = cash_pickup; //cash pickup
+//                    this_vm.donut_chart_data.amountTransferedData.data[2].y = bank_transfer; //bank transfer
+//
+//                    console.log(this_vm.info_box_data.amountTransferedData);
+//
+//
+//                    this_vm.donut_chart_data.amountTransferedData.loading_data = false;
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                }) 
             },
             convertDateToEpoch(start, end){
                 //return ((moment(date).valueOf()) / 1000).toFixed(0) + 's';
                 let temp_start = moment(start).format('YYYY-MM-DD')
                 let temp_end = moment(end).format('YYYY-MM-DD')
                 
-                let new_start = (moment(temp_start).valueOf() / 1000).toFixed(0) + 's'
-                let new_end = (moment(temp_end).valueOf() / 1000).toFixed(0) + 's'
+                let new_start = (moment(temp_start).startOf('day').valueOf() / 1000).toFixed(0) + 's'
+                let new_end = (moment(temp_end).endOf('day').valueOf() / 1000).toFixed(0) + 's'
                 
-                console.log('start: ' + start + ' end: ' + end);
-                console.log('temp_start: ' + temp_start + ' temp_end: ' + temp_end);
                 
                 console.log('new_start: ' + new_start + ' new_end: ' + new_end)
                 
@@ -386,12 +486,16 @@
                 let start = moment().subtract(8, 'days'),
                     end = moment().subtract(1, 'days')
 
+                this.convertDateToEpoch(start, end)
+                
                 let this_vm = this;
                 
-                function updateDate(start, end){                    
-                    jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>');
-                    
-                    this_vm.convertDateToEpoch(start, end)
+                
+                function updateDate(start, end){    
+                    jquery("#date_range").html(
+                        start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') +
+                        ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>'
+                    );   
                 }
 
                 jquery("#date_range").daterangepicker({
@@ -412,10 +516,7 @@
                 //When the user clicks on Apply from the date range picker
                 jquery('#date_range').on('apply.daterangepicker', function(ev, picker) {
                     
-                    //Convert the date selected to Epoch for the database to read the date ranges correctly
-                    //new_start_date = this_vm.convertDateToEpoch(picker.startDate)
-                    //new_end_date = this_vm.convertDateToEpoch(picker.endDate)
-                    
+                    updateDate(picker.startDate, picker.endDate)
                     this_vm.convertDateToEpoch(picker.startDate, picker.endDate)
                 });
             },

@@ -2,6 +2,7 @@
 <div class="row">
     <div class="col-sm-12">
         <h3>Errors</h3>
+        <p>Errors page coming soon. We need to meet up to discuss what error you want displayed here.</p>
     </div>
 </div>
 </template>
