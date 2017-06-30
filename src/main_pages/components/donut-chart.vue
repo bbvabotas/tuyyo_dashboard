@@ -60,9 +60,9 @@
                                 distance: 0,
                                 formatter: function(){
                                     if(this_data.name == 'Transfer Amount'){
-                                        return '$' + this.y.toFixed(0);
+                                        return '$' + this.y.toFixed(2);
                                     } else {
-                                        return this.y.toFixed(0);
+                                        return this.y;
                                     }
 
                                 },

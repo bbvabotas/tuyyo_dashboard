@@ -258,7 +258,7 @@
 //                    this.donut_chart_data.transfersData.data[2].y = 1; //bank transfer
 //                    
 //                    this.donut_chart_data.amountTransferedData.data[0].y = 61.03; //atm pickup
-//                    this.donut_chart_data.amountTransferedData.data[1].y = 501; //cash pickup
+//                    this.donut_chart_data.amountTransferedData.data[1].y = 501.39999999999; //cash pickup
 //                    this.donut_chart_data.amountTransferedData.data[2].y = 216.32; //bank transfer
 //                    
 //                    //Change the loading_data to false to display the new chart data
