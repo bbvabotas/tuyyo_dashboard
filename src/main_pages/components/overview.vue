@@ -388,7 +388,7 @@
                 });
                 
                 displayDate(start, end);
-                this_vm.getCustomerData(start, end)
+                this_vm.getCustomerData(((moment(start).valueOf()) / 1000).toFixed(0) + 's', ((moment(end).valueOf()) / 1000).toFixed(0) + 's')
             },
             getLogins(){
                 //console.log('getting logins...')
