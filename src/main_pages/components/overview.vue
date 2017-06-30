@@ -247,7 +247,7 @@
                 var end = moment("06/24/2017").valueOf();
                 
                 //console.log(start + ' to ' + end);
-                axios.get('/logins&start=' + start + '&end=' + end)
+                axios.get('/logins?start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
@@ -261,7 +261,7 @@
                 var end = moment("06/24/2017").valueOf();
                 
                 //console.log(start + ' to ' + end);
-                axios.get('/registrations&start=' + start + '&end=' + end)
+                axios.get('/registrations?start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
@@ -275,7 +275,7 @@
                 var end = moment("06/24/2017").valueOf();
                 
                 //console.log(start + ' to ' + end);
-                axios.get('/active&start=' + start + '&end=' + end)
+                axios.get('/active?start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
@@ -289,7 +289,7 @@
                 var end = moment("06/24/2017").valueOf();
                 
                 //console.log(start + ' to ' + end);
-                axios.get('/transferCount&start=' + start + '&end=' + end)
+                axios.get('/transferCount?start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
@@ -303,7 +303,7 @@
                 var end = moment("06/24/2017").valueOf();
                 
                 //console.log(start + ' to ' + end);
-                axios.get('/transferAmount&start=' + start + '&end=' + end)
+                axios.get('/transferAmount?start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
