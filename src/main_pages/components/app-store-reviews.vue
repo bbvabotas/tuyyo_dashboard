@@ -649,7 +649,7 @@
         top: 40px;
         left: 142px;
         z-index: 10;
-        transform: rotate(-75deg);
+        transform: rotate(15deg);
         transform-origin: center 92%;
     }
     
