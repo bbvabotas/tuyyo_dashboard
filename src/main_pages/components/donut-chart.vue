@@ -1,5 +1,11 @@
 <template>
-    <highcharts :options="options"></highcharts>
+    <div v-if="chart_data.loading_data">
+        <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+    </div>
+    <div v-else>
+        <highcharts :options="options"></highcharts>
+    </div>
+    
 </template>
 
 <script>
@@ -14,6 +20,7 @@
         },
         methods:{
             calculateOptions(){
+                
                 let this_data = this.chart_data;
                 
                 let chart_height = 200 + (this_data.data.length * 16);

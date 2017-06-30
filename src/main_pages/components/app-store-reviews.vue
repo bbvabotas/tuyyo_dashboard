@@ -12,22 +12,12 @@
         
         <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="rating_needle_wrapper">
-                            <div><img class="rating_gauge" :src="images.ratingGauge"></div>
-                            <div><img class="rating_needle_set" :src="images.ratingNeedleSet"></div>
-                            <div><img class="rating_needle_new" :src="images.ratingNeedleNew"></div>
-                            <div class="avg_rating_set">2.9</div>
-                            <div class="avg_rating_new">modified:<br>2.9</div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="row">
                             <div class="col-sm-12">
-                                <ratings-gauge :rating_data="averageRatingNum" style="height:300px"></ratings-gauge>
+                                
 <!--                                Average Review Rating <br> <strong>{{ averageRatingNum }}</strong>-->
                             </div>
                         </div>
@@ -35,16 +25,22 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="info_subtitle">
-                                    Disable any of the reviews below to toggle their rating effectiveness. Doing so will remove the comment's rating from the Average Review Rating to see what the score would look like without the comment. The "New Average Review Rating" will automatically update.
+                                    Disable any of the reviews to toggle their rating effectiveness. Doing so will remove the comment's rating from the Average Review Rating to see what the score would look like without the comment. The "modified" rating will automatically update.
                                     <br><br> Example: Disable comments with a 1 or 2 rating that mention technical issues. Then you can see what your score would be if those issues wern't there.
                                 </div>
+                                <div>
+                                    <h3>Average Review Rating</h3>
+                                    <ratings-gauge :rating_data="ratingGauge"></ratings-gauge>
+                                </div>
                                 <div class="row" style="margin: 20px 0">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div>Disabled Reviews <br> <strong>{{ disabledNum }} / {{ reviewData.length }}</strong></div>
                                     </div>
+<!--
                                     <div class="col-sm-6">
                                         <div>New Average Review Rating <br> <strong>{{ averageNumChange }}</strong></div>
                                     </div>
+-->
                                 </div>
                             </div>
                         </div>
@@ -153,10 +149,7 @@
                 },
                 images: {
                     oneStar: require("assets/img/star_1.png"),
-                    twoStar: require("assets/img/star_2.png"),
-                    ratingGauge: require("assets/img/rating_gauge.png"),
-                    ratingNeedleSet: require("assets/img/rating_needle_set.png"),
-                    ratingNeedleNew: require("assets/img/rating_needle_new.png")
+                    twoStar: require("assets/img/star_2.png")
                 },
                 query: '',
                 language: 'english',
@@ -168,6 +161,10 @@
                     {isDisabled: false, word: 'support'}, {isDisabled: false, word: 'register'}, {isDisabled: false, word: 'data'}, {isDisabled: false, word: 'transfer'},
                     {isDisabled: false, word: 'enter'}, {isDisabled: false, word: 'access'}
                 ],
+                ratingGauge: {
+                    averageRatingNum: 0,
+                    averageNumChange: 0
+                },
                 averageRatingNum: 0,
                 disabledNum: 0,
                 averageNumChange: 0,
@@ -398,6 +395,7 @@
                 }
 
                 this.averageRatingNum = (temp_num / allData.length).toFixed(1);
+                this.ratingGauge.averageRatingNum = (temp_num / allData.length).toFixed(1);
             },
             updateNumberOfDisabledComments: function (item) {
                 //Toggle the isDisabled for this item
@@ -433,11 +431,13 @@
                 
                 if(this.disabledNum == 0){
                     this.averageNumChange = 0;
+                    this.ratingGauge.averageNumChange = 0;
                 } else {
                     
                     temp_change_num = (temp_change_num / (allData.length - this.disabledNum)).toFixed(1);
 
                     this.averageNumChange = temp_change_num;
+                    this.ratingGauge.averageNumChange = temp_change_num;
                 }
                 
             },
@@ -453,6 +453,7 @@
                 this.disabledNum = 0;
 
                 this.averageNumChange = 0;
+                this.ratingGauge.averageNumChange = 0;
             },
             sortRating: function(){
                 let list = this.reviewData;
@@ -628,56 +629,6 @@
         margin: auto;
         
     }
-    .rating_needle_wrapper {
-        position: relative;
-        height: 300px;
-        width: 300px;
-        margin: auto;
-/*        border: 1px solid gray;*/
-    }
     
-    .rating_gauge {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0; left: 0;
-    }
-    
-    .rating_needle_set {
-        height: 120px;
-        position: absolute;
-        top: 40px;
-        left: 142px;
-        z-index: 10;
-        transform: rotate(15deg);
-        transform-origin: center 92%;
-    }
-    
-    .rating_needle_new {
-        height: 120px;
-        position: absolute;
-        z-index: 5;
-        top: 40px;
-        left: 142px;
-        transform: rotate(40deg);
-        transform-origin: center 92%;
-    }
-    
-    .avg_rating_set {
-        position: absolute;
-        font-size: 40px;
-        font-weight: bold;
-        left: 40%;
-        top: 180px;
-    }
-    
-    .avg_rating_new {
-        position: absolute;
-        top: 240px;
-        font-size: 14px;
-        color: #595959;
-        left: 40%;
-        top: 230px;
-    }
     
 </style>

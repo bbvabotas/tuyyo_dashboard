@@ -14,12 +14,13 @@
                 <i class="fa fa-money"></i> {{info_data.name}}
             </div>
             <div class="info_body">
-                <span v-if="info_data.name == 'Transfer Amount'">
-                    <strong>{{info_data.val}}</strong> (<strong>{{info_data.mxn}}</strong> MXN)
-                </span>
-                <span v-else="info_data.name != 'Transfer Amount">
+                <div v-if="info_data.val == ''">
+                    <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                </div>
+                <div v-else>
                     <strong>{{info_data.val}}</strong>
-                </span>
+                </div>
+                
             </div>
         </div>
     </div>

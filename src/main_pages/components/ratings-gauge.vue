@@ -1,5 +1,15 @@
 <template>
-    <highcharts :options="options" ref="highcharts"></highcharts>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="rating_needle_wrapper">
+                <div><img class="rating_gauge" :src="images.ratingGauge"></div>
+                <div><img class="rating_needle_set" :src="images.ratingNeedleSet" :style="{transform: 'rotate(' + needleSetAngle + 'deg)'}"></div>
+                <div><img class="rating_needle_new" :src="images.ratingNeedleNew" :style="{transform: 'rotate(' + needleNewAngle + 'deg)'}"></div>
+                <div class="avg_rating_set">{{rating_data.averageRatingNum}}</div>
+                <div class="avg_rating_new">modified:<br>{{rating_data.averageNumChange}}</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -9,133 +19,114 @@
     export default {
         //name: 'donut-chart',
         props: ['rating_data'],
+        mounted(){
+//            rating_data: {
+//                averageRatingNum: 0,
+//                averageNumChange: 0
+//            },
+            this.updateSetRatingsNeedle(this.rating_data.averageRatingNum)
+                this.updateNewRatingsNeedle(this.rating_data.averageNumChange)
+        },
         data() {
             return {
-                new_rating: 3,
-                options: this.calculateOptions()
+                needleSetAngle: 0,
+                needleNewAngle: 0,
+                images: {
+                    ratingGauge: require("assets/img/rating_gauge.png"),
+                    ratingNeedleSet: require("assets/img/rating_needle_set.png"),
+                    ratingNeedleNew: require("assets/img/rating_needle_new.png")
+                }
+            }
+        },
+        methods: {
+            calculateNeedleAngle(rating){
+                return ((30 - (rating * 10)) * -1) * 7.5
+            },
+            updateSetRatingsNeedle(rating){
+                
+                this.needleSetAngle = this.calculateNeedleAngle(parseFloat(this.rating_data.averageRatingNum))
+            },
+            updateNewRatingsNeedle(rating){
+                if(this.rating_data.averageNumChange == 0){
+                    this.needleNewAngle = this.calculateNeedleAngle(parseFloat(this.rating_data.averageRatingNum))
+                } else {
+                    this.needleNewAngle = this.calculateNeedleAngle(parseFloat(this.rating_data.averageNumChange))
+                }
+                
             }
         },
         watch: {
-            rating_data(){
-                let chart = this.$refs.highcharts.chart;
-                chart.series[0].points[0].update(parseFloat(this.rating_data));
-            }  
-        },
-        methods:{
-            calculateOptions(){
-                return {
-                    chart: {
-                        type: 'gauge',
-                        plotBackgroundColor: null,
-                        plotBackgroundImage: null,
-                        plotBorderWidth: 0,
-                        plotShadow: false
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    title: {
-                        text: ''
-                    },
-                    subtitle: {
-                        text: 'Average Review Rating'
-                    },
-                    tooltip: {
-                        enabled: false
-                    },
-                    pane: {
-                        startAngle: -150,
-                        endAngle: 150,
-                        background: [{
-                            backgroundColor: {
-                                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                                stops: [
-                                    [0, '#FFF'],
-                                    [1, '#333']
-                                ]
-                            },
-                            borderWidth: 0,
-                            outerRadius: '120%'
-                        }, {
-                            backgroundColor: {
-                                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                                stops: [
-                                    [0, '#333'],
-                                    [1, '#FFF']
-                                ]
-                            },
-                            borderWidth: 1,
-                            outerRadius: '107%'
-                        }, {
-                            // default background
-                        }, {
-                            backgroundColor: '#DDD',
-                            borderWidth: 0,
-                            outerRadius: '105%',
-                            innerRadius: '103%'
-                        }]
-                    },
-                    yAxis: {
-                        min: 1,
-                        max: 5,
-
-                        minorTickInterval: 'auto',
-                        minorTickWidth: 1,
-                        minorTickLength: 10,
-                        minorTickPosition: 'inside',
-                        minorTickColor: '#666',
-
-                        tickPixelInterval: 50,
-                        tickWidth: 2,
-                        tickPosition: 'inside',
-                        tickLength: 0.1,
-                        tickColor: '#666',
-                        labels: {
-                            step: 2,
-                            rotation: 'auto'
-                        },
-                        title: {
-                            text: ''
-                        },
-                        plotBands: [{
-                            from: 1,
-                            to: 2,
-                            color: 'red'
-                        }, {
-                            from: 2,
-                            to: 3,
-                            color: 'orange'
-                        }, {
-                            from: 3,
-                            to: 4,
-                            color: 'yellow'
-                        }, {
-                            from: 4,
-                            to: 4.5,
-                            color: 'yellowgreen'
-                        }, {
-                            from: 4.5,
-                            to: 5,
-                            color: 'green'
-                        }]
-                    },
-                    series: [{
-                        name: 'Rating',
-                        data: [1],
-                        dataLabels: {
-                            borderWidth: 0,
-                            y: 40,
-                            format: '<span style="font-size:3em">{y}</span>'
-                        }
-                    }]
-                }
+            'rating_data.averageRatingNum'(){
+                //console.log('change set needle')
+                this.updateSetRatingsNeedle(this.rating_data.averageRatingNum)
+                this.updateNewRatingsNeedle(this.rating_data.averageRatingNum)
+            },
+            'rating_data.averageNumChange'(){
+                //console.log('change new needle')
+                this.updateNewRatingsNeedle(this.rating_data.averageNumChange)
             }
         }
+//        watch: {
+//            rating_data(){
+//                let chart = this.$refs.highcharts.chart;
+//                chart.series[0].points[0].update(parseFloat(this.rating_data));
+//            }  
+//        }
     }
 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .rating_needle_wrapper {
+        position: relative;
+        height: 300px;
+        width: 300px;
+        margin: auto;
+/*        border: 1px solid gray;*/
+    }
     
+    .rating_gauge {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0; left: 0;
+    }
+    
+    .rating_needle_set {
+        height: 120px;
+        position: absolute;
+        top: 40px;
+        left: 142px;
+        z-index: 10;
+/*        transform: rotate(15deg);*/
+        transform-origin: center 92%;
+    }
+    
+    .rating_needle_new {
+        height: 120px;
+        position: absolute;
+        z-index: 5;
+        top: 40px;
+        left: 142px;
+/*        transform: rotate(40deg);*/
+        transform-origin: center 92%;
+    }
+    
+    .avg_rating_set {
+        position: absolute;
+        font-size: 40px;
+        font-weight: bold;
+        left: 40%;
+        top: 180px;
+    }
+    
+    .avg_rating_new {
+        position: absolute;
+        top: 240px;
+        font-size: 14px;
+        color: #595959;
+        left: 40%;
+        top: 230px;
+    }
 </style>

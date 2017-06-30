@@ -3,6 +3,7 @@
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
             <div class="row">
                 <div class="col-sm-12">
+<!--
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-default" @click="getLogins">Get Logins</button>
@@ -12,6 +13,7 @@
                             <button class="btn btn-default" @click="getTransferAmount">Get Transfer Amount</button>
                         </div>
                     </div>
+-->
                     <div class="row">
                         <div class="col-sm-12">
                             <h3>App Ratings</h3>
@@ -53,11 +55,11 @@
                     
                     <div class="row">
                         <div class="col-sm-3"><info-box :info_data="info_box_data.registeredCustomersData"></info-box></div>
-                        <div class="col-sm-3"><info-box :info_data="info_box_data.repeatCustomersData"></info-box></div>
+                        <div class="col-sm-3"><info-box :info_data="info_box_data.activeCustomersData"></info-box></div>
                         <div class="col-sm-3"><info-box :info_data="info_box_data.transfersData"></info-box></div>
                         <div class="col-sm-3"><info-box :info_data="info_box_data.amountTransferedData"></info-box></div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="height:250px">
 <!--
                         <div class="col-sm-3">
                             <donut-chart :chart_data="donut_chart_data.registeredCustomersData" class="donut-chart"></donut-chart>
@@ -137,71 +139,73 @@
                 info_box_data: {
                     registeredCustomersData: {
                         name: 'Registered Customers',
-                        val: Math.floor(Math.random() * 1000),
+                        val: '',
                         icon: 'user'
                     },
-                    repeatCustomersData: {
+                    activeCustomersData: {
                         name: 'Active Customers',
-                        val: Math.floor(Math.random() * 1000),
+                        val: '',
                         icon: 'repeat'
                     },
                     transfersData: {
                         name: 'Transfers',
-                        val: Math.floor(Math.random() * 1000),
+                        val: '',
                         icon: 'exchange'
                     },
                     amountTransferedData: {
                         name: 'Transfer Amount',
-                        val: '$' + Math.floor(Math.random() * 1000),
-                        mxn: Math.floor(Math.random() * 10000),
+                        val: '',
+                        mxn: 0,
                         icon: 'money'
                     }
                 },
                 donut_chart_data: {
-                    registeredCustomersData: {
-                        name: 'Registered Customers',
-                        data: [{
-                            name: 'United States',
-                            y: 245
-                        }, {
-                            name: 'Mexico',
-                            y: 913
-                        }]
-                    },
-                    repeatCustomersData: {
-                        name: 'Active Customers',
-                        data: [{
-                            name: 'United States',
-                            y: 245
-                        }, {
-                            name: 'Mexico',
-                            y: 913
-                        }]
-                    },
+//                    registeredCustomersData: {
+//                        name: 'Registered Customers',
+//                        data: [{
+//                            name: 'United States',
+//                            y: 245
+//                        }, {
+//                            name: 'Mexico',
+//                            y: 913
+//                        }]
+//                    },
+//                    repeatCustomersData: {
+//                        name: 'Active Customers',
+//                        data: [{
+//                            name: 'United States',
+//                            y: 245
+//                        }, {
+//                            name: 'Mexico',
+//                            y: 913
+//                        }]
+//                    },
                     transfersData: {
+                        loading_data: true,
                         name: 'Transfers',
                         data: [{
                             name: 'ATM Pickup',
-                            y: 245
+                            y: 0
                         }, {
                             name: 'Cash Pickup',
-                            y: 913
+                            y: 0
                         }, {
                             name: 'Bank Transfer',
-                            y: 510
+                            y: 0
                         }]
                     },
                     amountTransferedData: {
+                        loading_data: true,
                         name: 'Transfer Amount',
                         data: [{
                             name: 'ATM Pickup',
-                            y: 2045
+                            y: 0
                         }, {
                             name: 'Cash Pickup',
-                            y: 9130
+                            y: 0
                         }, {
                             name: 'Bank Transfer',
-                            y: 1134
+                            y: 0
                         }]
                     }
                 }
@@ -218,13 +222,109 @@
 //                  this.errors.push(e)
 //                })
             },
+            getCustomerData(start, end){
+                console.log('get data from ' + start + ' to ' + end)
+                
+                /*
+                    Blank out the data so that the loading spinner will display           
+                */
+                this.info_box_data.registeredCustomersData.val = '';
+                this.info_box_data.activeCustomersData.val = '';
+                this.info_box_data.transfersData.val = '';
+                this.info_box_data.amountTransferedData.val = '';
+
+                this.donut_chart_data.transfersData.data[0].y = ''; //atm pickup
+                this.donut_chart_data.transfersData.data[1].y = ''; //cash pickup
+                this.donut_chart_data.transfersData.data[2].y = ''; //bank transfer
+
+                this.donut_chart_data.amountTransferedData.data[0].y = ''; //atm pickup
+                this.donut_chart_data.amountTransferedData.data[1].y = ''; //cash pickup
+                this.donut_chart_data.amountTransferedData.data[2].y = ''; //bank transfer
+
+                this.donut_chart_data.transfersData.loading_data = true;
+                this.donut_chart_data.amountTransferedData.loading_data = true;
+                
+                //For testing purposes
+//                setTimeout( () => {
+//                    
+//                    this.info_box_data.registeredCustomersData.val = 27;
+//                    this.info_box_data.activeCustomersData.val = 39;
+//                    this.info_box_data.transfersData.val = 9;
+//                    this.info_box_data.amountTransferedData.val = '$' + 768.35;
+//                    
+//                    this.donut_chart_data.transfersData.data[0].y = 6; //atm pickup
+//                    this.donut_chart_data.transfersData.data[1].y = 2; //cash pickup
+//                    this.donut_chart_data.transfersData.data[2].y = 1; //bank transfer
+//                    
+//                    this.donut_chart_data.amountTransferedData.data[0].y = 61.03; //atm pickup
+//                    this.donut_chart_data.amountTransferedData.data[1].y = 501; //cash pickup
+//                    this.donut_chart_data.amountTransferedData.data[2].y = 216.32; //bank transfer
+//                    
+//                    //Change the loading_data to false to display the new chart data
+//                    this.donut_chart_data.transfersData.loading_data = false;
+//                    this.donut_chart_data.amountTransferedData.loading_data = false;
+//                    
+//                    console.log(this.customer_data);
+//                }, 4000)
+                
+                /*
+                    Now get the actual data
+                */
+                
+                let this_vm = this
+                axios.get('/registrations?start=' + start + '&end=' + end) //Get registration data
+                .then(response => {
+                    this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
+                    
+                    axios.get('/active?start=' + start + '&end=' + end) //Get active customer data
+                    .then(response => {
+                        this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
+                        
+                        axios.get('/transferCount?start=' + start + '&end=' + end) //Get transfer data
+                        .then(response => {
+                            
+                            let atm_pickup = response.data[0].count
+                            let cash_pickup = response.data[1].count
+                            let bank_transfer = response.data[2].count
+                            
+                            this_vm.info_box_data.transfersData.val = atm_pickup + cash_pickup + bank_transfer;
+                            this_vm.donut_chart_data.transfersData.data[0].y = atm_pickup; //atm pickup
+                            this_vm.donut_chart_data.transfersData.data[1].y = cash_pickup; //cash pickup
+                            this_vm.donut_chart_data.transfersData.data[2].y = bank_transfer; //bank transfer
+                            
+                            axios.get('/transferAmount?start=' + start + '&end=' + end) //Get transfer amount data
+                            .then(response => {
+                                let atm_pickup = response.data[0].count
+                                let cash_pickup = response.data[1].count
+                                let bank_transfer = response.data[2].count
+
+                                this_vm.info_box_data.amountTransferedData.val = atm_pickup + cash_pickup + bank_transfer;
+                                this_vm.donut_chart_data.amountTransferedData.data[0].y = atm_pickup; //atm pickup
+                                this_vm.donut_chart_data.amountTransferedData.data[1].y = cash_pickup; //cash pickup
+                                this_vm.donut_chart_data.amountTransferedData.data[2].y = bank_transfer; //bank transfer
+                            })
+                            .catch(e => {
+                                console.log(e)
+                            }) 
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        }) 
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    }) 
+                })
+                .catch(e => {
+                    console.log(e)
+                }) 
+            },
             dateRange(){
                 let start = moment().subtract(8, 'days'),
                     end = moment().subtract(1, 'days');
 
                 function displayDate(start, end){                    
                     jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>');
-                    console.log('stuff')
                 }
 
                 jquery("#date_range").daterangepicker({
@@ -241,19 +341,24 @@
                     maxDate: moment(),
                     alwaysShowCalendars: true
                 }, displayDate);
-
-                displayDate(start, end);
                 
+                //When the user clicks on Apply from the date range picker
                 let this_vm = this;
-                
                 jquery('#date_range').on('apply.daterangepicker', function(ev, picker) {
-                  //do something, like clearing an input
+                    
+                    //Convert the date selected to Epoch for the database to read the date ranges correctly
+                    let new_start_date = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
+                    let new_end_date = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
                     
                     this_vm.start_date = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
                     this_vm.end_date = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
                     
                     console.log(this_vm.start_date + ' to ' + this_vm.end_date);
+                    this_vm.getCustomerData(new_start_date, new_end_date)
                 });
+                
+                displayDate(start, end);
+                this_vm.getCustomerData(start, end)
             },
             getLogins(){
                 //console.log('getting logins...')
