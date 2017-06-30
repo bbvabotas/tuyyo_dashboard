@@ -24,12 +24,13 @@
                         <br>
                         <div class="row">
                             <div class="col-sm-12">
+                                <h3>Average Review Rating</h3>
                                 <div class="info_subtitle">
                                     Disable any of the reviews to toggle their rating effectiveness. Doing so will remove the comment's rating from the Average Review Rating to see what the score would look like without the comment. The "modified" rating will automatically update.
                                     <br><br> Example: Disable comments with a 1 or 2 rating that mention technical issues. Then you can see what your score would be if those issues wern't there.
                                 </div>
                                 <div>
-                                    <h3>Average Review Rating</h3>
+                                    
                                     <ratings-gauge :rating_data="ratingGauge"></ratings-gauge>
                                 </div>
                                 <div class="row" style="margin: 20px 0">

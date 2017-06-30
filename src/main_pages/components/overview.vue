@@ -1,6 +1,7 @@
 <template>
     <div class="landing">
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
             <div class="row">
                 <div class="col-sm-12">
 <!--
@@ -274,18 +275,35 @@
                 let this_vm = this
                 axios.get('/registrations?start=' + start + '&end=' + end) //Get registration data
                 .then(response => {
-                    this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
+                    if(response.data[0].count == undefined){
+                        this_vm.info_box_data.registeredCustomersData.val = 0;
+                    } else {
+                        this_vm.info_box_data.registeredCustomersData.val = response.data[0].count;
+                    }
+                    
                     
                     axios.get('/active?start=' + start + '&end=' + end) //Get active customer data
                     .then(response => {
-                        this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
+                        if(response.data[0].count == undefined){
+                            this_vm.info_box_data.activeCustomersData.val = 0;
+                        } else {
+                            this_vm.info_box_data.activeCustomersData.val = response.data[0].count;
+                        }
                         
                         axios.get('/transferCount?start=' + start + '&end=' + end) //Get transfer data
                         .then(response => {
                             
-                            let atm_pickup = response.data[0].count
-                            let cash_pickup = response.data[1].count
-                            let bank_transfer = response.data[2].count
+                            let atm_pickup = 0, cash_pickup = 0, bank_transfer = 0;
+                            
+                            if(response.data[0].count != undefined){
+                                atm_pickup = response.data[0].count
+                            }
+                            if(response.data[1].count != undefined){
+                                cash_pickup = response.data[1].count
+                            }
+                            if(response.data[2].count != undefined){
+                                bank_transfer = response.data[2].count
+                            }
                             
                             this_vm.info_box_data.transfersData.val = atm_pickup + cash_pickup + bank_transfer;
                             this_vm.donut_chart_data.transfersData.data[0].y = atm_pickup; //atm pickup
@@ -294,14 +312,26 @@
                             
                             axios.get('/transferAmount?start=' + start + '&end=' + end) //Get transfer amount data
                             .then(response => {
-                                let atm_pickup = response.data[0].count
-                                let cash_pickup = response.data[1].count
-                                let bank_transfer = response.data[2].count
+                                let atm_pickup = 0, cash_pickup = 0, bank_transfer = 0;
+                            
+                                if(response.data[0].count != undefined){
+                                    atm_pickup = response.data[0].count
+                                }
+                                if(response.data[1].count != undefined){
+                                    cash_pickup = response.data[1].count
+                                }
+                                if(response.data[2].count != undefined){
+                                    bank_transfer = response.data[2].count
+                                }
 
-                                this_vm.info_box_data.amountTransferedData.val = atm_pickup + cash_pickup + bank_transfer;
+                                this_vm.info_box_data.amountTransferedData.val = '$' + atm_pickup + cash_pickup + bank_transfer;
                                 this_vm.donut_chart_data.amountTransferedData.data[0].y = atm_pickup; //atm pickup
                                 this_vm.donut_chart_data.amountTransferedData.data[1].y = cash_pickup; //cash pickup
                                 this_vm.donut_chart_data.amountTransferedData.data[2].y = bank_transfer; //bank transfer
+                                
+                                
+                                this_vm.donut_chart_data.transfersData.loading_data = false;
+                                this_vm.donut_chart_data.amountTransferedData.loading_data = false;
                             })
                             .catch(e => {
                                 console.log(e)

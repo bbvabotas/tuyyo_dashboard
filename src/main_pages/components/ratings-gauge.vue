@@ -5,7 +5,9 @@
                 <div><img class="rating_gauge" :src="images.ratingGauge"></div>
                 <div><img class="rating_needle_set" :src="images.ratingNeedleSet" :style="{transform: 'rotate(' + needleSetAngle + 'deg)'}"></div>
                 <div><img class="rating_needle_new" :src="images.ratingNeedleNew" :style="{transform: 'rotate(' + needleNewAngle + 'deg)'}"></div>
-                <div class="avg_rating_set">{{rating_data.averageRatingNum}}</div>
+                <div class="avg_rating_set">
+                    <div style="font-size: 12px;">avg rating:</div>
+                    {{rating_data.averageRatingNum}}</div>
                 <div class="avg_rating_new">modified:<br>{{rating_data.averageNumChange}}</div>
             </div>
         </div>
@@ -117,8 +119,9 @@
         position: absolute;
         font-size: 40px;
         font-weight: bold;
-        left: 40%;
-        top: 180px;
+        text-align: center;
+        left: 120px;
+        top: 170px;
     }
     
     .avg_rating_new {
@@ -126,7 +129,7 @@
         top: 240px;
         font-size: 14px;
         color: #595959;
-        left: 40%;
-        top: 230px;
+        left: 120px;
+        top: 240px;
     }
 </style>

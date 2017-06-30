@@ -1,6 +1,7 @@
 <template>
    
 <div class="row">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
