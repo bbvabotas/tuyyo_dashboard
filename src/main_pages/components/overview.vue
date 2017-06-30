@@ -131,8 +131,8 @@
         },
         data() {
             return {
-                start_date: '',
-                end_date: '',
+//                start_date: '',
+//                end_date: '',
                 icon: {
                     android: 'iconAndroid',
                     ios: 'iconIOS'
@@ -295,40 +295,58 @@
                             
                             let atm_pickup = 0, cash_pickup = 0, bank_transfer = 0;
                             
-                            if(response.data[0].count != undefined){
+                            console.log(response);
+                            
+                            if(response.data != null){
                                 atm_pickup = response.data[0].count
-                            }
-                            if(response.data[1].count != undefined){
                                 cash_pickup = response.data[1].count
-                            }
-                            if(response.data[2].count != undefined){
                                 bank_transfer = response.data[2].count
                             }
+                            
+//                            if(response.data[0].count != undefined){
+//                                atm_pickup = response.data[0].count
+//                            }
+//                            if(response.data[1].count != undefined){
+//                                cash_pickup = response.data[1].count
+//                            }
+//                            if(response.data[2].count != undefined){
+//                                bank_transfer = response.data[2].count
+//                            }
                             
                             this_vm.info_box_data.transfersData.val = atm_pickup + cash_pickup + bank_transfer;
                             this_vm.donut_chart_data.transfersData.data[0].y = atm_pickup; //atm pickup
                             this_vm.donut_chart_data.transfersData.data[1].y = cash_pickup; //cash pickup
                             this_vm.donut_chart_data.transfersData.data[2].y = bank_transfer; //bank transfer
                             
+                            console.log(this_vm.info_box_data.transfersData);
+                            
                             axios.get('/transferAmount?start=' + start + '&end=' + end) //Get transfer amount data
                             .then(response => {
                                 let atm_pickup = 0, cash_pickup = 0, bank_transfer = 0;
                             
-                                if(response.data[0].count != undefined){
+                                console.log(response);
+                                
+                                if(response.data != null){
                                     atm_pickup = response.data[0].count
-                                }
-                                if(response.data[1].count != undefined){
                                     cash_pickup = response.data[1].count
-                                }
-                                if(response.data[2].count != undefined){
                                     bank_transfer = response.data[2].count
                                 }
+//                                if(response.data[0].count != undefined){
+//                                    atm_pickup = response.data[0].count
+//                                }
+//                                if(response.data[1].count != undefined){
+//                                    cash_pickup = response.data[1].count
+//                                }
+//                                if(response.data[2].count != undefined){
+//                                    bank_transfer = response.data[2].count
+//                                }
 
-                                this_vm.info_box_data.amountTransferedData.val = '$' + atm_pickup + cash_pickup + bank_transfer;
+                                this_vm.info_box_data.amountTransferedData.val = '$' + (atm_pickup + cash_pickup + bank_transfer);
                                 this_vm.donut_chart_data.amountTransferedData.data[0].y = atm_pickup; //atm pickup
                                 this_vm.donut_chart_data.amountTransferedData.data[1].y = cash_pickup; //cash pickup
                                 this_vm.donut_chart_data.amountTransferedData.data[2].y = bank_transfer; //bank transfer
                                 
+                                console.log(this_vm.info_box_data.amountTransferedData);
                                 
                                 this_vm.donut_chart_data.transfersData.loading_data = false;
                                 this_vm.donut_chart_data.amountTransferedData.loading_data = false;
@@ -349,12 +367,31 @@
                     console.log(e)
                 }) 
             },
+            convertDateToEpoch(start, end){
+                //return ((moment(date).valueOf()) / 1000).toFixed(0) + 's';
+                let temp_start = moment(start).format('YYYY-MM-DD')
+                let temp_end = moment(end).format('YYYY-MM-DD')
+                
+                let new_start = (moment(temp_start).valueOf() / 1000).toFixed(0) + 's'
+                let new_end = (moment(temp_end).valueOf() / 1000).toFixed(0) + 's'
+                
+                console.log('start: ' + start + ' end: ' + end);
+                console.log('temp_start: ' + temp_start + ' temp_end: ' + temp_end);
+                
+                console.log('new_start: ' + new_start + ' new_end: ' + new_end)
+                
+                this.getCustomerData(new_start, new_end)
+            },
             dateRange(){
                 let start = moment().subtract(8, 'days'),
-                    end = moment().subtract(1, 'days');
+                    end = moment().subtract(1, 'days')
 
-                function displayDate(start, end){                    
+                let this_vm = this;
+                
+                function updateDate(start, end){                    
                     jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>');
+                    
+                    this_vm.convertDateToEpoch(start, end)
                 }
 
                 jquery("#date_range").daterangepicker({
@@ -370,96 +407,88 @@
                     endDate: end,
                     maxDate: moment(),
                     alwaysShowCalendars: true
-                }, displayDate);
+                }, updateDate(start, end));
                 
                 //When the user clicks on Apply from the date range picker
-                let this_vm = this;
                 jquery('#date_range').on('apply.daterangepicker', function(ev, picker) {
                     
                     //Convert the date selected to Epoch for the database to read the date ranges correctly
-                    let new_start_date = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
-                    let new_end_date = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
+                    //new_start_date = this_vm.convertDateToEpoch(picker.startDate)
+                    //new_end_date = this_vm.convertDateToEpoch(picker.endDate)
                     
-                    this_vm.start_date = ((moment(picker.startDate).valueOf()) / 1000).toFixed(0) + 's'
-                    this_vm.end_date = ((moment(picker.endDate).valueOf()) / 1000).toFixed(0) + 's'
-                    
-//                    console.log(this_vm.start_date + ' to ' + this_vm.end_date);
-                    this_vm.getCustomerData(new_start_date, new_end_date)
+                    this_vm.convertDateToEpoch(picker.startDate, picker.endDate)
                 });
-                
-                displayDate(start, end);
-                this_vm.getCustomerData(((moment(start).valueOf()) / 1000).toFixed(0) + 's', ((moment(end).valueOf()) / 1000).toFixed(0) + 's')
             },
-            getLogins(){
-                //console.log('getting logins...')
-                var start = this.start_date
-                var end = this.end_date
-                
-                console.log(start + ' to ' + end);
-                axios.get('/logins?start=' + start + '&end=' + end)
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    console.log(e)
-                })                
-            },
-            getRegistrations(){
-                //console.log('getting logins...')
-                var start = this.start_date
-                var end = this.end_date
-                
-                //console.log(start + ' to ' + end);
-                axios.get('/registrations?start=' + start + '&end=' + end)
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    console.log(e)
-                })                
-            },
-            getActive(){
-                //console.log('getting logins...')
-                var start = this.start_date
-                var end = this.end_date
-                
-                //console.log(start + ' to ' + end);
-                axios.get('/active?start=' + start + '&end=' + end)
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    console.log(e)
-                })                
-            },
-            getTransfers(){
-                //console.log('getting logins...')
-                var start = this.start_date
-                var end = this.end_date
-                
-                //console.log(start + ' to ' + end);
-                axios.get('/transferCount?start=' + start + '&end=' + end)
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    console.log(e)
-                })                
-            },
-            getTransferAmount(){
-                //console.log('getting logins...')
-                var start = this.start_date
-                var end = this.end_date
-                
-                //console.log(start + ' to ' + end);
-                axios.get('/transferAmount?start=' + start + '&end=' + end)
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    console.log(e)
-                })                
-            }
+//            getLogins(){
+//                //console.log('getting logins...')
+//                var start = this.start_date
+//                var end = this.end_date
+//                
+//                console.log(start + ' to ' + end);
+//                axios.get('/logins?start=' + start + '&end=' + end)
+//                .then(response => {
+//                    console.log(response)
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                })                
+//            },
+//            getRegistrations(){
+//                //console.log('getting logins...')
+//                var start = this.start_date
+//                var end = this.end_date
+//                
+//                //console.log(start + ' to ' + end);
+//                axios.get('/registrations?start=' + start + '&end=' + end)
+//                .then(response => {
+//                    console.log(response)
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                })                
+//            },
+//            getActive(){
+//                //console.log('getting logins...')
+//                var start = this.start_date
+//                var end = this.end_date
+//                
+//                //console.log(start + ' to ' + end);
+//                axios.get('/active?start=' + start + '&end=' + end)
+//                .then(response => {
+//                    console.log(response)
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                })                
+//            },
+//            getTransfers(){
+//                //console.log('getting logins...')
+//                var start = this.start_date
+//                var end = this.end_date
+//                
+//                //console.log(start + ' to ' + end);
+//                axios.get('/transferCount?start=' + start + '&end=' + end)
+//                .then(response => {
+//                    console.log(response)
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                })                
+//            },
+//            getTransferAmount(){
+//                //console.log('getting logins...')
+//                var start = this.start_date
+//                var end = this.end_date
+//                
+//                //console.log(start + ' to ' + end);
+//                axios.get('/transferAmount?start=' + start + '&end=' + end)
+//                .then(response => {
+//                    console.log(response)
+//                })
+//                .catch(e => {
+//                    console.log(e)
+//                })                
+//            }
         },
         components: {
             DonutChart,
