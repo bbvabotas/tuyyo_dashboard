@@ -6,6 +6,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-default" @click="getLogins">Get Logins</button>
+                            <button class="btn btn-default" @click="getRegistrations">Get Registrations</button>
                             <button class="btn btn-default" @click="getActive">Get Active Customers</button>
                             <button class="btn btn-default" @click="getTransfers">Get Transfers</button>
                             <button class="btn btn-default" @click="getTransferAmount">Get Transfer Amount</button>
@@ -247,6 +248,20 @@
                 
                 //console.log(start + ' to ' + end);
                 axios.get('/logins&start=' + start + '&end=' + end)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    console.log(e)
+                })                
+            },
+            getRegistrations(){
+                //console.log('getting logins...')
+                var start = moment("06/18/2017").valueOf();
+                var end = moment("06/24/2017").valueOf();
+                
+                //console.log(start + ' to ' + end);
+                axios.get('/registrations&start=' + start + '&end=' + end)
                 .then(response => {
                     console.log(response)
                 })
