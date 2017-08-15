@@ -131,49 +131,25 @@
     
     import moment from 'moment'
     import papaparse from 'papaparse'
-    import jquery from 'jquery'
-    import daterangepicker from 'daterangepicker'
     
     import RatingsGauge from './ratings-gauge.vue'
     
     export default {
         mounted: function () {
-            this.getReviews();
-            
-            this.dateRange();
+            this.getAverageRating();
         },
+        props: ['reviewData'],
         data(){
             return {
-                icons: {
-                    iconAndroid: require("assets/img/icon_android.png"),
-                    iconIOS: require("assets/img/icon_ios.svg")
-                },
-                images: {
-                    oneStar: require("assets/img/star_1.png"),
-                    twoStar: require("assets/img/star_2.png")
-                },
                 query: '',
                 language: 'english',
-                reviewData: [],
-                search_words: [
-                    {isDisabled: false, word: 'update'}, {isDisabled: false, word: 'deposit'}, {isDisabled: false, word: 'error'}, {isDisabled: false, word: 'account'},
-                    {isDisabled: false, word: 'transactions'}, {isDisabled: false, word: 'log'}, {isDisabled: false, word: 'slow'}, {isDisabled: false, word: 'notification'},
-                    {isDisabled: false, word: 'secure'}, {isDisabled: false, word: 'crash'}, {isDisabled: false, word: 'password'}, {isDisabled: false, word: 'card'},
-                    {isDisabled: false, word: 'support'}, {isDisabled: false, word: 'register'}, {isDisabled: false, word: 'data'}, {isDisabled: false, word: 'transfer'},
-                    {isDisabled: false, word: 'enter'}, {isDisabled: false, word: 'access'}
-                ],
                 ratingGauge: {
                     averageRatingNum: 0,
                     averageNumChange: 0
                 },
                 averageRatingNum: 0,
                 disabledNum: 0,
-                averageNumChange: 0,
-                addWord: '',
-                showWordFrequencyList: false,
-                NumberOfOneStarReviews: 8,
-                NumberOfTwoStarReviews: 2
-                
+                averageNumChange: 0
             }
         },
         computed: {
@@ -185,178 +161,6 @@
             }
         },
         methods: {
-            getReviews(){                
-                this.reviewData.push({
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english_subject: "It's ok",
-                    english: "Lately I can not have installed the application on the mobile, it detects me with virus, and advises me to uninstall, I thought it happened to my mobile, but a friend told me that it happens to her too, what can I do?",
-                    spanish_subject: "Es bueno",
-                    spanish: "Últimamente no puedo tener instala la aplicación en el móvil, me detecta con virus, y me aconseja desinstalar, pensaba que le pasaba a mi móvil, pero una amiga me dijo que a ella le pasa también, que puedo hacer?",
-                    rating: 3
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english_subject: "good",
-                    english: "' very good. .",
-                    spanish_subject: "buena",
-                    spanish: "' muy buena. .",
-                    rating: 4
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english_subject: "access problem",
-                    english: "I have a problem I do not know how to create the access key and I ask for my number and the password key to enter i entered i is told to create but it does not let me i in the end me a since it blocked the user i have to do?",
-                    spanish_subject: "acceso problema",
-                    spanish: "Tengo un problema nose como crear la clave de acceso y me la pide mi número targeta y la clave para poder entrar i entró i me dice crear pero no me deja i al final me a puesto que se me a bloqueado el a usuario que tengo que hacer?",
-                    rating: 4
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english_subject: "BAD!",
-                    english: "Bad bad. How is it possible that you try to see a very exact receipt paid, and only leave the generic receipt without specifying who, who, and what do you pay ??? And neither print nor talk ..",
-                    spanish_subject: "MALA!",
-                    spanish: "Mala, mala. Cómo es posible que intentes ver un recibo muy exacto pagado, y solo salga el recibo genérico sin especificar que,a quien, y que es lo que pagas??? Y de imprimir ni hablamos..",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-02',
-                    english: "Excellent",
-                    spanish: "Excelente",
-                    rating: 5
-                },{
-                    isDisabled: false,
-                    date: '2017-06-02',
-                    english: "Sorry, for months and months fails, it's a shame ...",
-                    spanish: "Penosa, desde hace meses y meses falla, es una vergüenza...",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "For a couple of days it has stopped working, connection error",
-                    spanish: "Desde hace un par de días ha dejado de funcionar, error de conexión",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "Until two months ago it was my most useful application. Then, I do not know why, the application is not opened sometimes and the operations I do are not going so fast. I would like to go back to the previous version.",
-                    spanish: "Hasta hace dos meses era mi aplicación más útil. Luego, no se por qué, no se abre la aplicación a veces y no van tan rápidas las operaciones que hago. Me gustaría volver a la versión anterior.",
-                    rating: 2
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "It saves you time and is very reliable",
-                    spanish: "Te ahorra tiempo y es muy confiable",
-                    rating: 5
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "He asks me if I give it to him and he tells me that I have gone from trying",
-                    spanish: "Me pide clavé se la doy y me dice que me he pasado de intentos",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "The only thing missing from this application is a little hole to make money for everything else is great.",
-                    spanish: "Lo único que le falta a esta aplicación es un agujerito para sacar dinero para todo lo demás es estupenda.",
-                    rating: 5
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english: "Lately I can not have installed the application on the mobile, it detects me with virus, and advises me to uninstall, I thought it happened to my mobile, but a friend told me that it happens to her too, what can I do?",
-                    spanish: "Últimamente no puedo tener instala la aplicación en el móvil, me detecta con virus, y me aconseja desinstalar, pensaba que le pasaba a mi móvil, pero una amiga me dijo que a ella le pasa también, que puedo hacer?",
-                    rating: 3
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english: "' very good. .",
-                    spanish: "' muy buena. .",
-                    rating: 4
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english: "I have a problem I do not know how to create the access key and I ask for my number and the password key to enter i entered i is told to create but it does not let me i in the end me a since it blocked the user i have to do?",
-                    spanish: "Tengo un problema nose como crear la clave de acceso y me la pide mi número targeta y la clave para poder entrar i entró i me dice crear pero no me deja i al final me a puesto que se me a bloqueado el a usuario que tengo que hacer?",
-                    rating: 4
-                },{
-                    isDisabled: false,
-                    date: '2017-06-03',
-                    english: "Bad bad. How is it possible that you try to see a very exact receipt paid, and only leave the generic receipt without specifying who, who, and what do you pay ??? And neither print nor talk ..",
-                    spanish: "Mala, mala. Cómo es posible que intentes ver un recibo muy exacto pagado, y solo salga el recibo genérico sin especificar que,a quien, y que es lo que pagas??? Y de imprimir ni hablamos..",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-02',
-                    english: "Excellent",
-                    spanish: "Excelente",
-                    rating: 5
-                },{
-                    isDisabled: false,
-                    date: '2017-06-02',
-                    english_subject: "fail",
-                    english: "Sorry, for months and months fails, it's a shame ...",
-                    spanish_subject: "falla",
-                    spanish: "Penosa, desde hace meses y meses falla, es una vergüenza...",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "For a couple of days it has stopped working, connection error",
-                    spanish: "Desde hace un par de días ha dejado de funcionar, error de conexión",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "Until two months ago it was my most useful application. Then, I do not know why, the application is not opened sometimes and the operations I do are not going so fast. I would like to go back to the previous version.",
-                    spanish: "Hasta hace dos meses era mi aplicación más útil. Luego, no se por qué, no se abre la aplicación a veces y no van tan rápidas las operaciones que hago. Me gustaría volver a la versión anterior.",
-                    rating: 2
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "It saves you time and is very reliable",
-                    spanish: "Te ahorra tiempo y es muy confiable",
-                    rating: 5
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "He asks me if I give it to him and he tells me that I have gone from trying",
-                    spanish: "Me pide clavé se la doy y me dice que me he pasado de intentos",
-                    rating: 1
-                },{
-                    isDisabled: false,
-                    date: '2017-06-01',
-                    english: "The only thing missing from this application is a little hole to make money for everything else is great.",
-                    spanish: "Lo único que le falta a esta aplicación es un agujerito para sacar dinero para todo lo demás es estupenda.",
-                    rating: 5
-                });
-                
-                this.getAverageRating();
-            },
-            dateRange(){
-                let start = moment().subtract(7, 'days'),
-                    end = moment();
-
-                function displayDate(start, end){                    
-                    jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down"></i></span>');
-                }
-
-                jquery("#date_range").daterangepicker({
-                    opens: 'center',
-                    ranges: {
-                       'Today': [moment(), moment()],
-                       'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                       'Last 7 Days': [moment().subtract(7, 'days'), moment()],
-                       'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-                       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    },
-                    startDate: start,
-                    endDate: end,
-                    maxDate: moment(),
-                    alwaysShowCalendars: true
-                }, displayDate);
-
-                displayDate(start, end);
-            },
             exportDataToCSV(){
                 console.log("Exporting table...");
                 let new_csv = papaparse.unparse(this.tableFilter);
@@ -399,9 +203,6 @@
                 this.ratingGauge.averageRatingNum = (temp_num / allData.length).toFixed(1);
             },
             updateNumberOfDisabledComments: function (item) {
-                //Toggle the isDisabled for this item
-                //item.isDisabled = !item.isDisabled;
-                
                 //Check to see how many items are disabled
                 let allData = this.reviewData,
                     temp_disabled_num = 0;
@@ -580,10 +381,6 @@
         font-size: 0.8em;
     }
 
-    .avg_score_header {
-        font-size: 1.5em;
-    }
-
     .highlight_language_selection {
         font-weight: bold;
         text-transform: uppercase;;
@@ -603,33 +400,7 @@
         margin: 0 20px;
         vertical-align: middle;
     }
-    
-    .icon_size {
-        height: 60px;
-        padding: 4px;
-    }
-    
-    .icon_size:hover {
-        cursor: pointer;
-    }
-    
-    .icon_active {
-        border: 1px solid blue;
-        border-radius: 5px;
-    }
-    
-    .date_range_wrapper {
-        background: #fff;
-        cursor: pointer;
-        padding: 5px 10px;
-/*
-        border: 1px solid #ccc;
-        border-radius: 5px;
-*/
-        width: 300px;
-        margin: auto;
-        
-    }
+   
     
     
 </style>

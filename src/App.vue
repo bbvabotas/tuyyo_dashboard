@@ -15,10 +15,13 @@
     <div>
         <ul class="nav_main">
             <li>
-                <div><img src="~@/assets/logo.png" /></div>
+                <div><img :src="images.logoSrc" /></div>
             </li>
             <li>
-                <div>Tuyyo Dashboard</div>
+                <router-link active-class="active-page" to="/overview">
+                    <div><img :src="images.logoTuyyo"></div>
+                </router-link>
+                
             </li>
             <li>
                 <div>
@@ -32,12 +35,18 @@
                     <div><i class="fa fa-comments-o fa-2x"></i><br>Customer Feedback</div>
                 </router-link>
             </li>
+<!--
             <li>
                 <router-link active-class="active-page" to="/errors">
                     <div><i class="fa fa-exclamation-circle fa-2x"></i><br>Errors</div>
                 </router-link>
-<!--                <div><i class="fa fa-exclamation-circle fa-2x"></i><br>Errors</div>-->
             </li>
+            <li>
+                <router-link active-class="active-page" to="/emails">
+                    <div><i class="fa fa-envelope-o fa-2x"></i><br>Emails</div>
+                </router-link>
+            </li>
+-->
         </ul>
 
     </div>
@@ -59,9 +68,10 @@
         },
         data() {
             return {
-       //         images: {
-       //             logoSrc: require("./src/assets/img/logo.png")
-       //         },
+                images: {
+                    logoSrc: require("assets/img/logo.png"),
+                    logoTuyyo: require("assets/img/tuyyo_logo.png")
+                },
                 liveTransfers: 2,
                 liveTransfersString: '2',
                 liveTransferAmount: 50,

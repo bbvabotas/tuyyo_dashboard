@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Landing from '@/main_pages/Landing'
 import CustomerFeedback from '@/main_pages/Customer-Feedback'
 import Errors from '@/main_pages/Errors'
+import Emails from '@/main_pages/Emails'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
             path: '/errors',
             name: 'Errors',
             component: Errors
+        },
+        {
+            path: '/emails',
+            name: 'Emails',
+            component: Emails
         }
     ]
 })

@@ -15,17 +15,10 @@
 </template>
 
 <script>
-    
-    //import 'highcharts-more'
-    
     export default {
         //name: 'donut-chart',
         props: ['rating_data'],
         mounted(){
-//            rating_data: {
-//                averageRatingNum: 0,
-//                averageNumChange: 0
-//            },
             this.updateSetRatingsNeedle(this.rating_data.averageRatingNum)
                 this.updateNewRatingsNeedle(this.rating_data.averageNumChange)
         },
@@ -68,12 +61,6 @@
                 this.updateNewRatingsNeedle(this.rating_data.averageNumChange)
             }
         }
-//        watch: {
-//            rating_data(){
-//                let chart = this.$refs.highcharts.chart;
-//                chart.series[0].points[0].update(parseFloat(this.rating_data));
-//            }  
-//        }
     }
 
 </script>

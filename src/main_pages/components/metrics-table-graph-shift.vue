@@ -18,7 +18,8 @@
                 //console.log(this_data);
                 
                 let shift_color = '',
-                    temp_shift = 0;
+                    temp_shift = 0,
+                    max_bar_height = 2;
                 
                 temp_shift = this_data - 1;
                 //console.log(temp_shift);
@@ -36,6 +37,9 @@
                     shift_color = '#7cb5ec'
                 }
                 
+                if(this_data > 2){
+                    max_bar_height = this_data
+                }
                 
                 return {
                     chart: {
@@ -68,7 +72,7 @@
                             enabled: false  
                         },
                         min: -1,
-                        max: 2
+                        max: max_bar_height
                     },
                     tooltip: {
                         enabled: false

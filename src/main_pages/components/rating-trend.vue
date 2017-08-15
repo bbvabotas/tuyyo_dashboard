@@ -36,11 +36,27 @@
                     subtitle: {
                         text: 'Rating Trend'
                     },
-                    yAxis: {
-                        visible: false,
-                        max: 5,
-                        min: 0
-                    },
+                    yAxis: [{
+                        visible: true,
+                        title: {
+                            text: 'Average Review Rating'
+                        },
+                        //tickInterval: 2,
+                        min: 0,
+                        max: 6
+                    },{
+                        visible: true,
+                        title: {
+                            text: 'Number of reviews',
+                            style: {
+                                "color": "#7cb5ec"
+                            }
+                        },
+                        opposite: true,
+                        //tickInterval: 2
+    //                    min: 0,
+    //                    max: 4
+                    }],
                     xAxis: {
                         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                     },
@@ -58,12 +74,35 @@
                                     console.log(this_app.bar_colors);
                                     return this_app.convertNumberToHaveCommas(this.y);
                                 }
-                            }
+                            },
+                            color: "black",
+                            shadow: true
+                        },
+                        column: {
+                            dataLabels: {
+                                enabled: true,
+                                formatter: function(){
+                                    if(this.y > 0){
+                                        return this.y
+                                    }
+                                },
+                                inside: true,
+                                verticalAlign: 'bottom'
+                            },
+                            color: "#7cb5ec"
+                            //borderWidth: 0,
+                            //shadow: true
                         }
                     },
                     series: [{
-                        name: 'Rating',
+                        type: 'line',
+                        yAxis: 0,
+                        zIndex: 10,
                         data: [3.2, 3.4, 4.3, 4.1, 3.9, 4.2, 3.4, 4.3, 4.1, 3.9, 4.5, 4.6]
+                    },{
+                        type: 'column',
+                        yAxis: 1,
+                        data: [120, 100, 90, 45, 90, 95, 103, 121, 130, 109, 99, 78]
                     }]
                 }
             }

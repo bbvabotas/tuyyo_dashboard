@@ -1,25 +1,67 @@
 <template>
 <div class="row">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <div class="col-sm-12">
-        <!--
-        <div class="row">
-            <div class="col-sm-12">
-                <h4>Negative Review Analysis (rating of 1 - 2)</h4>
-            </div>
-        </div>
--->
         <div class="row">
             <div class="col-sm-12" style="text-align:center;">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>
+                                    <span>{{ NumberOfOneStarReviews + NumberOfTwoStarReviews }}</span> out of
+                                    <span class="a_total_review_count">{{ reviewData.length }}</span> reviews are negative
+                                </h4>
+                                <div class="progress" style="margin:20px auto; width:50%; height:50px; background-color:#e6e6e6">
+                                    <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" style="width:45%; font-size:24px; font-weight:bold; padding:16px 0">
+                                        {{ (((NumberOfOneStarReviews + NumberOfTwoStarReviews) / reviewData.length) * 100).toFixed(0) }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div><img :src="images.oneStar" class="star_img"></div>
+                                <br>
+                                <div>
+                                    <div class="red neg_circle_sm">{{ ((NumberOfOneStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
+                                    <br><br>
+                                    <div>
+                                        <span style="font-weight:bold">{{ NumberOfOneStarReviews }}</span> out of a total of
+                                        <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are one star
+                                    </div>
+                                </div>
+                                <br>
+                                <div><i>word frequency with how many reviews have that word</i></div>
+                                <word-frequency-chart class="word_frequency_chart" :chart_data="chart_data.one_star"></word-frequency-chart>
+                            </div>
+                            <div class="col-sm-6">
+                                <div><img :src="images.twoStar" class="star_img"></div>
+                                <br>
+                                <div>
+                                    <div class="orange neg_circle_sm">{{ ((NumberOfTwoStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
+                                    <br><br>
+                                    <div>
+                                        <span style="font-weight:bold">{{ NumberOfTwoStarReviews }}</span> out of a total of
+                                        <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are two stars
+                                    </div>
+                                </div>
+                                <br>
+                                <div><i>word frequency with how many reviews have that word</i></div>
+                                <word-frequency-chart class="word_frequency_chart" :chart_data="chart_data.two_star"></word-frequency-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="word_frequency_table_wrapper">
                                     <h4>Edit words to search for in the word frequency</h4>
                                     <div class="info_subtitle">
                                         Disable a word to remove it from the word frequency.
-                                        <br><br> Each word will include variations of the word and is case in-sensitive.
+                                        <br><br> Adding a new word will include variations of the word and is case in-sensitive.
                                         <br> Example: Searching for the word "log" will find a review with the word "log", "Log", "LoG", logs", "login", "logon", "logged", etc.
                                     </div>
                                     <hr>
@@ -29,7 +71,7 @@
                                                 <thead>
                                                     <tr>
                                                         <td>Disable</td>
-                                                        <td>Word</td>
+                                                        <td style="text-align:center">Word (count)</td>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -38,7 +80,7 @@
                                                     <tbody>
                                                         <tr v-for="word in wordFrequencyWordList" v-bind:class="{ disable_row: word.isDisabled }">
                                                             <td><input type="checkbox" v-model="word.isDisabled"></td>
-                                                            <td>{{ word.word }}</td>
+                                                            <td>{{ word.word }} ({{word.frequency_count}})</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -58,7 +100,7 @@
 
                                             <div class="row" style="position:absolute; bottom:0; width:100%;">
                                                 <div class="col-sm-12">
-                                                    <button class="btn btn-default">Apply</button>
+                                                    <button class="btn btn-default" @click="applyWordUpdate">Apply</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,57 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h4>
-                                    <span>{{ NumberOfOneStarReviews + NumberOfTwoStarReviews }}</span> out of
-                                    <span class="a_total_review_count">{{ reviewData.length }}</span> reviews are negative
-                                </h4>
-                                <div class="progress" style="margin:20px 0">
-                                    <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" style="width:45%">
-                                        {{ (((NumberOfOneStarReviews + NumberOfTwoStarReviews) / reviewData.length) * 100).toFixed(0) }}%
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div><img :src="images.oneStar" class="star_img"></div>
-                                <br>
-                                <div>
-                                    <div class="red neg_circle_sm">{{ ((NumberOfOneStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
-                                    <br><br>
-                                    <div>
-                                        <span style="font-weight:bold">{{ NumberOfOneStarReviews }}</span> out of a total of
-                                        <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are one star
-                                    </div>
-                                </div>
-                                <br>
-                                <div><i>word frequency with review count</i></div>
-                                <div class="frequency_chart"></div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div><img :src="images.twoStar" class="star_img"></div>
-                                <br>
-                                <div>
-                                    <div class="orange neg_circle_sm">{{ ((NumberOfTwoStarReviews / reviewData.length) * 100).toFixed(0) }}%</div>
-                                    <br><br>
-                                    <div>
-                                        <span style="font-weight:bold">{{ NumberOfTwoStarReviews }}</span> out of a total of
-                                        <span style="font-weight:bold">{{ reviewData.length }}</span> reviews are two stars
-                                    </div>
-                                </div>
-                                <br>
-                                <div><i>word frequency with review count</i></div>
-                                <div class="frequency_chart"></div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -128,243 +120,279 @@
     import moment from 'moment'
     import papaparse from 'papaparse'
     
-    import jquery from 'jquery'
-    import daterangepicker from 'daterangepicker'
+    import wordFrequencyChart from './word-frequency-chart.vue'
     
     export default {
         mounted: function () {
-            this.getReviews();
-            this.dateRange();
+            this.findUniqueSearchWords();
         },
+        props: ['reviewData'],
         data(){
             return {
-                icons: {
-                    iconAndroid: require("assets/img/icon_android.png"),
-                    iconIOS: require("assets/img/icon_ios.svg")
-                },
                 images: {
                     oneStar: require("assets/img/star_1.png"),
                     twoStar: require("assets/img/star_2.png")
                 },
-                query: '',
                 language: 'english',
-                reviewData: [],
-                search_words: [
-                    {isDisabled: false, word: 'update', frequency_count: 0}, {isDisabled: false, word: 'deposit', frequency_count: 0},
-                    {isDisabled: false, word: 'error', frequency_count: 0}, {isDisabled: false, word: 'account', frequency_count: 0},
-                    {isDisabled: false, word: 'transactions', frequency_count: 0}, {isDisabled: false, word: 'log', frequency_count: 0},
-                    {isDisabled: false, word: 'slow', frequency_count: 0}, {isDisabled: false, word: 'notification', frequency_count: 0},
-                    {isDisabled: false, word: 'secure', frequency_count: 0}, {isDisabled: false, word: 'crash', frequency_count: 0},
-                    {isDisabled: false, word: 'password', frequency_count: 0}, {isDisabled: false, word: 'card', frequency_count: 0},
-                    {isDisabled: false, word: 'support', frequency_count: 0}, {isDisabled: false, word: 'register', frequency_count: 0},
-                    {isDisabled: false, word: 'data', frequency_count: 0}, {isDisabled: false, word: 'transfer', frequency_count: 0},
-                    {isDisabled: false, word: 'enter', frequency_count: 0}, {isDisabled: false, word: 'access', frequency_count: 0}
-                ],
+                search_words: [],
+                chart_data: {
+                    one_star: {
+                        loading_data: true,
+                        rating: 1,
+                        categories: [],
+                        data: []
+                    },
+                    two_star: {
+                        loading_data: true,
+                        rating: 2,
+                        categories: [],
+                        data: []
+                    } 
+                },
                 addWord: '',
-                showWordFrequencyList: false,
-                NumberOfOneStarReviews: 8,
-                NumberOfTwoStarReviews: 2
+                NumberOfOneStarReviews: 0,
+                NumberOfTwoStarReviews: 0
                 
             }
         },
         computed: {
             wordFrequencyWordList: function(){
                 return this.sortWordFrequencyWordList();
-            },
-            tableFilter: function () {                
-                return this.findBy(this.query)
             }
         },
         methods: {
-            getReviews(){                
-                this.reviewData.push({
-                    date: '2017-06-03',
-                    english_subject: "It's ok",
-                    english: "Lately I can not have installed the application on the mobile, it detects me with virus, and advises me to uninstall, I thought it happened to my mobile, but a friend told me that it happens to her too, what can I do?",
-                    spanish_subject: "Es bueno",
-                    spanish: "Últimamente no puedo tener instala la aplicación en el móvil, me detecta con virus, y me aconseja desinstalar, pensaba que le pasaba a mi móvil, pero una amiga me dijo que a ella le pasa también, que puedo hacer?",
-                    rating: 3
-                },{
-                    
-                    date: '2017-06-03',
-                    english_subject: "good",
-                    english: "' very good. .",
-                    spanish_subject: "buena",
-                    spanish: "' muy buena. .",
-                    rating: 4
-                },{
-                    
-                    date: '2017-06-03',
-                    english_subject: "access problem",
-                    english: "I have a problem I do not know how to create the access key and I ask for my number and the password key to enter i entered i is told to create but it does not let me i in the end me a since it blocked the user i have to do?",
-                    spanish_subject: "acceso problema",
-                    spanish: "Tengo un problema nose como crear la clave de acceso y me la pide mi número targeta y la clave para poder entrar i entró i me dice crear pero no me deja i al final me a puesto que se me a bloqueado el a usuario que tengo que hacer?",
-                    rating: 4
-                },{
-                    
-                    date: '2017-06-03',
-                    english_subject: "BAD!",
-                    english: "Bad bad. How is it possible that you try to see a very exact receipt paid, and only leave the generic receipt without specifying who, who, and what do you pay ??? And neither print nor talk ..",
-                    spanish_subject: "MALA!",
-                    spanish: "Mala, mala. Cómo es posible que intentes ver un recibo muy exacto pagado, y solo salga el recibo genérico sin especificar que,a quien, y que es lo que pagas??? Y de imprimir ni hablamos..",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-02',
-                    english: "Excellent",
-                    spanish: "Excelente",
-                    rating: 5
-                },{
-                    
-                    date: '2017-06-02',
-                    english: "Sorry, for months and months fails, it's a shame ...",
-                    spanish: "Penosa, desde hace meses y meses falla, es una vergüenza...",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "For a couple of days it has stopped working, connection error",
-                    spanish: "Desde hace un par de días ha dejado de funcionar, error de conexión",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "Until two months ago it was my most useful application. Then, I do not know why, the application is not opened sometimes and the operations I do are not going so fast. I would like to go back to the previous version.",
-                    spanish: "Hasta hace dos meses era mi aplicación más útil. Luego, no se por qué, no se abre la aplicación a veces y no van tan rápidas las operaciones que hago. Me gustaría volver a la versión anterior.",
-                    rating: 2
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "It saves you time and is very reliable",
-                    spanish: "Te ahorra tiempo y es muy confiable",
-                    rating: 5
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "He asks me if I give it to him and he tells me that I have gone from trying",
-                    spanish: "Me pide clavé se la doy y me dice que me he pasado de intentos",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "The only thing missing from this application is a little hole to make money for everything else is great.",
-                    spanish: "Lo único que le falta a esta aplicación es un agujerito para sacar dinero para todo lo demás es estupenda.",
-                    rating: 5
-                },{
-                    
-                    date: '2017-06-03',
-                    english: "Lately I can not have installed the application on the mobile, it detects me with virus, and advises me to uninstall, I thought it happened to my mobile, but a friend told me that it happens to her too, what can I do?",
-                    spanish: "Últimamente no puedo tener instala la aplicación en el móvil, me detecta con virus, y me aconseja desinstalar, pensaba que le pasaba a mi móvil, pero una amiga me dijo que a ella le pasa también, que puedo hacer?",
-                    rating: 3
-                },{
-                    
-                    date: '2017-06-03',
-                    english: "' very good. .",
-                    spanish: "' muy buena. .",
-                    rating: 4
-                },{
-                    
-                    date: '2017-06-03',
-                    english: "I have a problem I do not know how to create the access key and I ask for my number and the password key to enter i entered i is told to create but it does not let me i in the end me a since it blocked the user i have to do?",
-                    spanish: "Tengo un problema nose como crear la clave de acceso y me la pide mi número targeta y la clave para poder entrar i entró i me dice crear pero no me deja i al final me a puesto que se me a bloqueado el a usuario que tengo que hacer?",
-                    rating: 4
-                },{
-                    
-                    date: '2017-06-03',
-                    english: "Bad bad. How is it possible that you try to see a very exact receipt paid, and only leave the generic receipt without specifying who, who, and what do you pay ??? And neither print nor talk ..",
-                    spanish: "Mala, mala. Cómo es posible que intentes ver un recibo muy exacto pagado, y solo salga el recibo genérico sin especificar que,a quien, y que es lo que pagas??? Y de imprimir ni hablamos..",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-02',
-                    english: "Excellent",
-                    spanish: "Excelente",
-                    rating: 5
-                },{
-                    
-                    date: '2017-06-02',
-                    english_subject: "fail",
-                    english: "Sorry, for months and months fails, it's a shame ...",
-                    spanish_subject: "falla",
-                    spanish: "Penosa, desde hace meses y meses falla, es una vergüenza...",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "For a couple of days it has stopped working, connection error",
-                    spanish: "Desde hace un par de días ha dejado de funcionar, error de conexión",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "Until two months ago it was my most useful application. Then, I do not know why, the application is not opened sometimes and the operations I do are not going so fast. I would like to go back to the previous version.",
-                    spanish: "Hasta hace dos meses era mi aplicación más útil. Luego, no se por qué, no se abre la aplicación a veces y no van tan rápidas las operaciones que hago. Me gustaría volver a la versión anterior.",
-                    rating: 2
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "It saves you time and is very reliable",
-                    spanish: "Te ahorra tiempo y es muy confiable",
-                    rating: 5
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "He asks me if I give it to him and he tells me that I have gone from trying",
-                    spanish: "Me pide clavé se la doy y me dice que me he pasado de intentos",
-                    rating: 1
-                },{
-                    
-                    date: '2017-06-01',
-                    english: "The only thing missing from this application is a little hole to make money for everything else is great.",
-                    spanish: "Lo único que le falta a esta aplicación es un agujerito para sacar dinero para todo lo demás es estupenda.",
-                    rating: 5
-                });                                
-            },
-            dateRange(){
-                let start = moment().subtract(7, 'days'),
-                    end = moment();
-
-                function displayDate(start, end){                    
-                    jquery("#date_range").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') + ' <span><i class="fa fa-chevron-down"></i></span>');
+            findUniqueSearchWords(){
+                
+                let i = 0, j = 0,
+                    pattern = /\w+/g,
+                    review_string = '',
+                    unique_words = [],
+                    words_star_one = [],
+                    words_star_two = [],
+                    compiled_words = '';
+                
+                let exclusion_words = [
+                    'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+                    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+                    't', 'u', 'v', 'w', 'x', 'y', 'z',
+                    'bad', 'how', 'and', 'ask', 'asks', 'couple', 'days', 'day', 'do', 'does', "doesn't", 'exact', 'for',
+                    'from', 'give', 'gone', 'has', 'have', 'he', 'him', 'i', 'if', 'is', 'it', 'leave', 'me', 'neither', 'nor',
+                    'of', 'only', 'possible', 's', 'see', 'sorry', 'specifying', 'stopped', 'talk', 'tells', 'that', 'the', 'to',
+                    'very', 'what', 'who', 'without', 'you', 'ago', 'are', 'back', 'fast', 'go', 'going', 'know', 'like', 'months',
+                    'most', 'my', 'not', 'opened', 'previous', 'so', 'sometimes', 'then', 'until', 'useful', 'was', 'why', 'would',
+                    'lately', 'can', 'on', 'detects', 'with', 'advises', 'thought', 'happened', 'but', 'friend', 'told', 'happens',
+                    'her', 'too', 'good', 'create', 'enter', 'entered', 'let', 'in', 'end', 'since', 'blocked', 'try', 'print',
+                    'excellent', 'working', 'saves', 'time', 'reliable', 'trying', 'thing', 'missing', 'this', 'little', 'hole',
+                    'make', 'everything', 'else', 'great'
+                ]
+                
+                //Combine all of the review's text for one and two star rating
+                for(i = 0; i < this.reviewData.length; i++){
+                    if(this.reviewData[i].rating < 3){
+                        review_string += this.reviewData[i].english.toLowerCase() + ' ';
+                    }   
                 }
+                
+                //Separate them into individual words
+                compiled_words = review_string.match( pattern );
+                
+                //Get the unique words from the compiled words so there are no duplicates
+                for(i = 0; i < compiled_words.length; i++){
+                    
+                    //If the word is not in the exclusion list or already in the unique words, then add it
+                    if(exclusion_words.indexOf(compiled_words[i]) == -1 && unique_words.indexOf(compiled_words[i]) == -1){
+                        unique_words.push(compiled_words[i]);
+                        this.search_words.push({
+                            isDisabled: false,
+                            word: compiled_words[i],
+                            frequency_count: 0
+                        })
+                    }
+                }                
+                
+                this.calculateWordFrequencyTotals();
+            },
+            calculateWordFrequencyTotals(){
+                let temp_pattern,
+                    i = 0, j = 0;
+                
+                for(i = 0; i < this.search_words.length; i++){
+                    this.search_words[i].frequency_count = 0;
+                }
+                
+                //Go through the reviews with a one or two rating
+                for(i = 0; i < this.reviewData.length; i++){
+                    
+                    if(this.reviewData[i].rating < 3){
+                        
+                        //Go through all of the search words to see if any of them are in the review
+                        for(j = 0; j < this.search_words.length; j++){
+                            temp_pattern = new RegExp(this.search_words[j].word, 'i');
 
-                jquery("#date_range").daterangepicker({
-                    opens: 'center',
-                    ranges: {
-                       'Today': [moment(), moment()],
-                       'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                       'Last 7 Days': [moment().subtract(7, 'days'), moment()],
-                       'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-                       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    },
-                    startDate: start,
-                    endDate: end,
-                    maxDate: moment(),
-                    alwaysShowCalendars: true
-                }, displayDate);
+                            if(this.reviewData[i].english.match(temp_pattern)){
+                                this.search_words[j].frequency_count++
+                            }
+                        }
+                    }
+                }
+                
+                //console.log(this.search_words); 
+                
+                this.calculateWordFrequency();
+            },
+            calculateWordFrequency(){
+                let i = 0, j = 0, k = 0,
+                    can_add = true,
+                    temp_pattern;
+                
+                let temp_word_frequency = {
+                    one_star: [],
+                    two_star: []
+                }
+                
+                this.NumberOfOneStarReviews = 0;
+                this.NumberOfTwoStarReviews = 0;
+                
+                //Go through the reviews with a one or two rating
+                for(i = 0; i < this.reviewData.length; i++){
+                    
+                    if(this.reviewData[i].rating == 1){
+                        this.NumberOfOneStarReviews++
+                
+                        //Go through all of the search words to see if any of them are in the review
+                        for(j = 0; j < this.search_words.length; j++){
+                            
+                            if(!this.search_words[j].isDisabled){
+                                temp_pattern = new RegExp(this.search_words[j].word, 'i');
 
-                displayDate(start, end);
+                                if(this.reviewData[i].english.match(temp_pattern)){
+
+                                    can_add = true;
+
+                                    //Check to see if this word is already pushed into the word frequency
+                                    for(k = 0; k < temp_word_frequency.one_star.length; k++){
+                                        if(temp_word_frequency.one_star[k].word == this.search_words[j].word){
+
+                                            temp_word_frequency.one_star[k].frequency++
+
+                                            can_add = false;
+                                            break;
+                                        }
+                                    }
+
+                                    if(can_add){
+                                        temp_word_frequency.one_star.push({
+                                            word: this.search_words[j].word,
+                                            frequency: 1
+                                        })
+                                    }
+
+                                }
+                            }
+                        }
+                        
+                    } else if(this.reviewData[i].rating == 2){
+                        this.NumberOfTwoStarReviews++
+                        
+                        //Go through all of the search words to see if any of them are in the review
+                        for(j = 0; j < this.search_words.length; j++){
+                            
+                            if(!this.search_words[j].isDisabled){
+                                temp_pattern = new RegExp(this.search_words[j].word, 'i');
+
+                                if(this.reviewData[i].english.match(temp_pattern)){
+
+                                    can_add = true;
+
+                                    //Check to see if this word is already pushed into the word frequency
+                                    for(k = 0; k < temp_word_frequency.two_star.length; k++){
+                                        if(temp_word_frequency.two_star[k].word == this.search_words[j].word){
+
+                                            temp_word_frequency.two_star[k].frequency++
+
+                                            can_add = false;
+                                            break;
+                                        }
+                                    }
+
+                                    if(can_add){
+                                        temp_word_frequency.two_star.push({
+                                            word: this.search_words[j].word,
+                                            frequency: 1
+                                        })
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                this.prepFrequencyForHighcharts(temp_word_frequency);
             },
-            exportDataToCSV(){
-                console.log("Exporting table...");
-                let new_csv = papaparse.unparse(this.tableFilter);
-                //console.log(new_csv);
-                this.downloadCSV(new_csv);
+            prepFrequencyForHighcharts(words){
+                let new_categories = [],
+                    new_data = [],
+                    temp_total = 0                
+                
+                words.one_star.sort(function(a, b){
+                    return b.frequency - a.frequency
+                })
+                words.two_star.sort(function(a, b){
+                    return b.frequency - a.frequency
+                })
+                
+                console.log(words);
+                
+                if(words.one_star.length > 5){
+                    words.one_star = words.one_star.slice(0, 5)    
+                } else if(words.one_star.length < 5){
+                    let temp_num = 5 - words.one_star.length;
+                    
+                    for(let i = 0; i < temp_num; i++){
+                        words.one_star.push({
+                            word: '',
+                            frequency: 0
+                        })
+                    }
+                }
+                
+                if(words.two_star.length > 5){
+                    words.two_star = words.two_star.slice(0, 5)    
+                } else if(words.two_star.length < 5){
+                    let temp_num = 5 - words.two_star.length;
+                    
+                    for(let i = 0; i < temp_num; i++){
+                        words.two_star.push({
+                            word: '',
+                            frequency: 0
+                        })
+                    }
+                }
+                
+                
+                
+                this.chart_data.one_star.categories.push('Total')
+                this.chart_data.one_star.data.push(this.NumberOfOneStarReviews)
+                
+                this.chart_data.two_star.categories.push('Total')
+                this.chart_data.two_star.data.push(this.NumberOfTwoStarReviews)
+                
+                for(let i = 0; i < words.two_star.length; i++){
+                    this.chart_data.one_star.categories.push(words.one_star[i].word)
+                    this.chart_data.one_star.data.push(words.one_star[i].frequency)
+                }
+                
+                for(let i = 0; i < words.two_star.length; i++){
+                    this.chart_data.two_star.categories.push(words.two_star[i].word)
+                    this.chart_data.two_star.data.push(words.two_star[i].frequency)
+                }
+                
+                this.chart_data.one_star.loading_data = false;
+                this.chart_data.two_star.loading_data = false;
+                
+                //console.log(this.chart_data);
             },
-            downloadCSV(csv) {
-                let blob = new Blob([csv]),
-                    a = window.document.createElement("a");
-                
-                a.href = window.URL.createObjectURL(blob, {type: "text/plain"});
-                a.download = "App_Negative_Reviews.csv";
-                
-                document.body.appendChild(a);
-                
-                a.click();
-                
-                document.body.removeChild(a);
-            },
-            sortWordFrequencyWordList: function () {
+            sortWordFrequencyWordList() {
                 let list = this.search_words;
                 return list.sort(function(a,b){
                     if(a.word < b.word) return -1;
@@ -372,43 +400,44 @@
                     return 0;
                 });
             },
-            addWordToWordFrequencyList: function(){
-                this.search_words.push({isDisabled: false, word: this.addWord.toLowerCase()})
+            addWordToWordFrequencyList(){
+                this.search_words.push({isDisabled: false, word: this.addWord.toLowerCase(), frequency_count: 0})
+                
+                //Now that the new word is added, recalculate the word frequency with this new word
+                this.chart_data = {
+                    one_star: {
+                        loading_data: true,
+                        categories: [],
+                        data: []
+                    },
+                    two_star: {
+                        loading_data: true,
+                        categories: [],
+                        data: []
+                    } 
+                };
+                
+                this.calculateWordFrequencyTotals();                
             },
-            sortRating: function(){
-                let list = this.reviewData;
-                return list.sort(function(a,b){
-                    return a.rating - b.rating;
-                });
-            },
-            sortDate: function(){
-                let list = this.reviewData;
-                return list.sort(function(a,b){
-                    return new Date(a.date) - new Date(b.date); 
-                });
-            },
-            findBy: function (value) {
-                let search_regex = new RegExp(value, "i"),
-                    search_language = this.language,
-                    list = this.reviewData;
-
-                return list.filter(function (item) {
-                    //Update the table rows with the word that is being searched for in the search box
-                    if(item.rating < 3){
-                        item.date = moment(item.date).format('MMM-DD-YYYY');
-                        return item[search_language].match(search_regex);
-                    }
-                                                                    
-                });
-            },
-            changeLanguage: function(this_language){
-                //console.log(this_language);
-                if(this_language == 'english'){
-                    this.language = 'english';
-                } else {
-                    this.language = 'spanish';
-                }
+            applyWordUpdate(){
+                this.chart_data = {
+                    one_star: {
+                        loading_data: true,
+                        categories: [],
+                        data: []
+                    },
+                    two_star: {
+                        loading_data: true,
+                        categories: [],
+                        data: []
+                    } 
+                };
+                
+                this.calculateWordFrequencyTotals(); 
             }
+        },
+        components: {
+            wordFrequencyChart
         }
     }
 
@@ -418,16 +447,22 @@
 <style scoped>
     
     .word_frequency_table_wrapper {
-        width: 90%;
+        width: 50%;
+        margin: auto;
     }
 
     .word_frequency_table {
         margin: 0;
-/*        width: 50%;*/
+/*        width: 300px;*/
     }
 
     .word_frequency_table td:nth-child(1){
         width: 70px;
+    }
+    
+    .word_frequency_table td:nth-child(2){
+        text-align: left;
+        padding-left: 20px;
     }
 
     .word_frequency_word_wrapper {
@@ -453,52 +488,6 @@
         font-size: 1.5em;
     }
 
-    .trend_btn {
-        background-color: white;
-        padding: 5px 10px;
-        margin: 5px;
-        border: 1px solid gray;
-        border-radius: 5px;
-    }
-
-    .trend_btn_active {
-        border: 2px solid blue;
-    }
-
-    .neg_circle_big {
-        font-size: 3em;
-        font-weight: bold;
-        width: 120px;
-        height: 120px;
-        text-align: center;
-        line-height: 114px;
-        vertical-align: middle;
-        border: 3px solid red;
-        border-radius: 50%;
-        margin: auto;
-    }
-
-    .neg_circle_sm {
-        font-size: 1em;
-        font-weight: bold;
-        width: 50px;
-        height: 50px;
-        /*            padding: 10px 5px 10px 5px;*/
-        text-align: center;
-        border-radius: 50%;
-        display: inline-block;
-        line-height: 44px;
-        vertical-align: middle;
-    }
-
-    .red {
-        border: 3px solid #ff8b5a;
-    }
-
-    .orange {
-        border: 3px solid #ffb234;
-    }
-
     .star_img {
         height: 20px;
     }
@@ -508,142 +497,35 @@
         width: 100%;
     }
 
-    .trend_chart {
-        height: 300px;
-    }
-    
-    .header_option {
-        text-decoration: underline;
-        font-weight: normal;
-        color: blue;
-        font-size: 0.8em;
-    }
-
-    .header_option:hover {
-        cursor: pointer;
-    }
-
-    .disable_row {
-        text-decoration: line-through;
-        color: lightgray;
-    }
-
     .info_subtitle {
         font-size: 0.8em;
     }
     
-    .comments_table_wrapper {
-        height: 750px;
-        overflow-y: scroll;
-    }
-
-    .comments_table {
-        width: 100%;
-        margin: 0;
-    }
-
-    .comments_table th {
-        text-align: center;
-    }
-
-    .comments_table th:nth-child(1) {
-        width: 70px;
-    }
-
-    .comments_table th:nth-child(3) {
-        width: 65px;
-    }
-
-    .comments_table td:nth-child(1) {
-        width: 70px;
-    }
-
-
-    .comments_table td:nth-child(3) {
-        width: 65px;
-    }
-
-    .comment_table_info {
-        width: 100%;
-    }
-
-    .comment_table_info th {
-        width: 50%;
-        text-align: center;
-    }
-
-    .comment_info {
-        width: 33%;
-    }
-    
-    .comments_search {
-        text-align: left;
-        margin: 10px 0;
-    }
-    
-    .table_search_box {
-        width: 100%;
-        text-align: left;
-        font-size: 0.8em;
-        margin: 10px 0;
-    }
-    
-    .table_search_box input {
-        border: 1px solid gray;
-    }
-    
-    .highlight_language_selection {
+    .neg_circle_sm {
+        font-size: 1em;
         font-weight: bold;
-        text-transform: uppercase;;
-    }
-    
-    .date_range_picker {
-        margin: 20px 0;
-    }
-    
-    .export_button {
-        text-align: right;
-        padding: 0 10px;
-    }
-    
-    .export_button:hover {
-        cursor: pointer;
-    }
-    
-    .platform_selection {
-        margin: 10px 0;
-    }
-    
-    .page_header {
+        width: 50px;
+        height: 50px;
+/*            padding: 10px 5px 10px 5px;*/
+        text-align: center;
+        border-radius: 50%;
         display: inline-block;
-        margin: 0 20px;
+        line-height: 44px;
         vertical-align: middle;
     }
-    
-    .icon_size {
-        height: 60px;
-        padding: 4px;
+    .red {
+        border: 3px solid #ff8b5a;
+    }
+    .orange {
+        border: 3px solid #ffb234;
     }
     
-    .icon_size:hover {
-        cursor: pointer;
+    .disable_row {
+        text-decoration: line-through;
+        color: lightgray;
     }
     
-    .icon_active {
-        border: 1px solid blue;
-        border-radius: 5px;
-    }
-    
-    .date_range_wrapper {
-        background: #fff;
-        cursor: pointer;
-        padding: 5px 10px;
-/*
-        border: 1px solid #ccc;
-        border-radius: 5px;
-*/
-        width: 300px;
-        margin: auto;
-        
+    .word_frequency_chart {
+        height: 200px;
     }
 </style>

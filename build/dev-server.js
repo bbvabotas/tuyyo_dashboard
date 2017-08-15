@@ -25,26 +25,26 @@ var proxyTable = config.dev.proxyTable
 
 
 
-var Influx = require('influx')
-
-var influx = new Influx.InfluxDB({
-  host: '10.0.1.160',
-  database: 'TUYO',
-   port: 8086,
-    username: 'influxapi',
-    password: 'P5fsE9ftsgRfnGhN',
-})
-
-influx.getDatabaseNames()
-  .then(names => {
-    if (names.includes('TUYO')) {
-      console.log('Connected to Influx DB') ;
-    }
-  })
-  .catch(err => {
-  console.log(err);
-    console.log(`Error getting Influx database!`);
-  })
+//var Influx = require('influx')
+//
+//var influx = new Influx.InfluxDB({
+//  host: '10.0.1.160',
+//  database: 'TUYO',
+//   port: 8086,
+//    username: 'influxapi',
+//    password: 'P5fsE9ftsgRfnGhN',
+//})
+//
+//influx.getDatabaseNames()
+//  .then(names => {
+//    if (names.includes('TUYO')) {
+//      console.log('Connected to Influx DB') ;
+//    }
+//  })
+//  .catch(err => {
+//  console.log(err);
+//    console.log(`Error getting Influx database!`);
+//  })
 
 
 
