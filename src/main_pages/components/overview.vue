@@ -5,16 +5,11 @@
            
             <div class="row">
                 <div class="col-sm-12">
+                   
 <!--
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button class="btn btn-default" @click="getLogins">Get Logins</button>
-                            <button class="btn btn-default" @click="getRegistrations">Get Registrations</button>
-                            <button class="btn btn-default" @click="getActive">Get Active Customers</button>
-                            <button class="btn btn-default" @click="getTransfers">Get Transfers</button>
-                            <button class="btn btn-default" @click="getTransferAmount">Get Transfer Amount</button>
-                        </div>
-                    </div>
+                    
+                        App Ratings
+                    
 -->
                     <div class="row">
                         <div class="col-sm-12">
@@ -30,51 +25,192 @@
                         </div>
                     </div>
                     <hr>
+                    
+<!--
+                    
+                        Stats
+                    
+-->
                     <div class="row">
                         <div class="col-sm-12">
                             <h3>Stats</h3>
                         </div>
                     </div>
+                    
+<!--
                     <div class="row">
                         <div class="col-sm-12">
                             <overview-live-data></overview-live-data>
                         </div>
                     </div>
-<!--                    <hr>-->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div><strong>Date Range:</strong></div>
-                            <div id="date_range" class="date_range_wrapper"></div>
-                                
-                        </div>
-                    </div>
                     
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div style="font-size:0.9em; font-style:italic;">The below data combines Android and iOS</div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>All Time</h4>
+                                    <div style="height:32px;"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalRegisteredCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalActiveCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalTransfersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalAmountTransferedData"></info-box></div>
+                            </div>
+                            <div class="row" style="height:250px">
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownRegistrations"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownLogins"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownTransfers"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownTransferAmount"></overview-stat-breakdown>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalTransferBreakdown"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalTransferAmountBreakdown"></overview-stat-breakdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Date Range</h4>
+                                    <div id="date_range2" class="date_range_wrapper"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.registeredCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.activeCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.transfersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.amountTransferedData"></info-box></div>
+                            </div>
+
+                            <div class="row" style="height:250px">
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownRegistrations"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownLogins"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownTransfers"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownTransferAmount"></overview-stat-breakdown>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.transferBreakdown"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.transferAmountBreakdown"></overview-stat-breakdown>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-sm-3"><info-box :info_data="info_box_data.registeredCustomersData"></info-box></div>
-                        <div class="col-sm-3"><info-box :info_data="info_box_data.activeCustomersData"></info-box></div>
-                        <div class="col-sm-3"><info-box :info_data="info_box_data.transfersData"></info-box></div>
-                        <div class="col-sm-3"><info-box :info_data="info_box_data.amountTransferedData"></info-box></div>
-                    </div>
-                    <div class="row" style="height:250px">
-<!--
-                        <div class="col-sm-3">
-                            <donut-chart :chart_data="donut_chart_data.registeredCustomersData" class="donut-chart"></donut-chart>
-                        </div>
-                        <div class="col-sm-3">
-                            <donut-chart :chart_data="donut_chart_data.repeatCustomersData" class="donut-chart"></donut-chart>
-                        </div>
 -->
-                        <div class="col-sm-6">
-                            <donut-chart :chart_data="donut_chart_data.transfersData" class="donut-chart"></donut-chart>
+                   
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <overview-live-data></overview-live-data>
                         </div>
-                        <div class="col-sm-6">
-                            <donut-chart :chart_data="donut_chart_data.amountTransferedData" class="donut-chart"></donut-chart>
+                    </div>
+                    
+                    <div class="row" style="width:90%; margin:auto">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>All Time</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalRegisteredCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalActiveCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalTransfersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.totalAmountTransferedData"></info-box></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownRegistrations"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownLogins"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownTransfers"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalStatBreakdownTransferAmount"></overview-stat-breakdown>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalTransferBreakdown"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.totalTransferAmountBreakdown"></overview-stat-breakdown>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="row" style="width:90%; margin:auto">
+                        
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Date Range</h4>
+                                    <div id="date_range" class="date_range_wrapper"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.registeredCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.activeCustomersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.transfersData"></info-box></div>
+                                <div class="col-sm-3"><info-box :info_data="info_box_data.amountTransferedData"></info-box></div>
+                            </div>
+
+                            <div class="row" style="height:250px">
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownRegistrations"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownLogins"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownTransfers"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-3">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.statBreakdownTransferAmount"></overview-stat-breakdown>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.transferBreakdown"></overview-stat-breakdown>
+                                </div>
+                                <div class="col-sm-6">
+                                    <overview-stat-breakdown :breakdown_data="info_box_data.transferAmountBreakdown"></overview-stat-breakdown>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -95,6 +231,7 @@
                         </div>
                     </div>
                     <hr>
+                    
                     <div class="row">
                         <div class="col-sm-12">
                             <metrics-table></metrics-table>
@@ -112,6 +249,7 @@
     import OverviewLiveData from './overview-live-data'
     import DonutChart from './donut-chart.vue'
     import InfoBox from './info-box.vue'
+    import OverviewStatBreakdown from './overview-stat-breakdown'
     import CountriesUs from './countries-us.vue'
     import CountriesMx from './countries-mx.vue'
     import OverviewAppRating from './overview-app-rating.vue'
@@ -132,13 +270,135 @@
         },
         data() {
             return {
-//                start_date: '',
-//                end_date: '',
                 icon: {
                     android: 'iconAndroid',
                     ios: 'iconIOS'
                 },
                 info_box_data: {
+                    totalStatBreakdown: {
+                        loading_data: true,
+                        name: 'Stats per platform',
+                        categories: ['New Registrations', 'Logins', 'Transfers', 'Transfer Amount'],
+                        android: [1900, 2189, 2987, 5679],
+                        ios: [590, 1111, 1234, 5124]
+                    },
+                    totalStatBreakdownRegistrations: {
+                        loading_data: true,
+                        name: 'New Registrations per platform',
+                        categories: ['Android', 'iOS'],
+                        data: [1900, 590],
+                        android: [1900],
+                        ios: [590] 
+                    },
+                    totalStatBreakdownLogins: {
+                        loading_data: true,
+                        name: 'Logins per platform',
+                        categories: ['Android', 'iOS'],
+                        data: [2189, 1111],
+                        android: [2189],
+                        ios: [1111] 
+                    },
+                    totalStatBreakdownTransfers: {
+                        loading_data: true,
+                        name: 'Transfers per platform',
+                        categories: ['Android', 'iOS'],
+                        data: [2987, 1234],
+                        android: [2987],
+                        ios: [1234] 
+                    },
+                    totalStatBreakdownTransferAmount: {
+                        loading_data: true,
+                        name: 'Transfer Amount per platform',
+                        categories: ['Android', 'iOS'],
+                        data: [5679, 5124],
+                        android: [5679],
+                        ios: [5124] 
+                    },
+                    totalTransferBreakdown: {
+                        loading_data: true,
+                        name: 'Transfers by method per platform',
+                        categories: ['ATM Pickup', 'Cash Pickup', 'Bank Transfers'],
+                        android: [690, 1789, 387],
+                        ios: [345, 876, 34]
+                    },
+                    totalTransferAmountBreakdown: {
+                        loading_data: true,
+                        name: 'Transfer Amount by method per platform',
+                        categories: ['ATM Pickup', 'Cash Pickup', 'Bank Transfers'],
+                        android: [1990, 3789, 1387],
+                        ios: [2345, 3876, 234]
+                    },
+                    statBreakdown: {
+                        loading_data: true,
+                        name: 'Stats per platform',
+                        categories: ['New Registrations', 'Logins', 'Transfers', 'Transfer Amount'],
+                        android: [20, 29, 7, 579],
+                        ios: [7, 10, 2, 194]
+                    },
+                    
+                    statBreakdownRegistrations: {
+                        loading_data: true,
+                        name: 'New Registrations per platform',
+                        categories: ['New Registrations'],
+                        android: [20],
+                        ios: [7] 
+                    },
+                    statBreakdownLogins: {
+                        loading_data: true,
+                        name: 'Logins per platform',
+                        categories: ['Logins'],
+                        android: [29],
+                        ios: [10] 
+                    },
+                    statBreakdownTransfers: {
+                        loading_data: true,
+                        name: 'Transfers per platform',
+                        categories: ['Transfers'],
+                        android: [7],
+                        ios: [2] 
+                    },
+                    statBreakdownTransferAmount: {
+                        loading_data: true,
+                        name: 'Transfer Amount per platform',
+                        categories: ['Transfer Amount'],
+                        android: [579],
+                        ios: [194] 
+                    },
+                    transferBreakdown: {
+                        loading_data: true,
+                        name: 'Transfers by method per platform',
+                        categories: ['ATM Pickup', 'Cash Pickup', 'Bank Transfers'],
+                        android: [4, 2, 1],
+                        ios: [2, 0, 0]
+                    },
+                    transferAmountBreakdown: {
+                        loading_data: true,
+                        name: 'Transfer Amount by method per platform',
+                        categories: ['ATM Pickup', 'Cash Pickup', 'Bank Transfers'],
+                        android: [352, 209, 50],
+                        ios: [194, 0, 0]
+                    },
+                    totalRegisteredCustomersData: {
+                        name: 'New Registrations',
+                        val: '',
+                        icon: 'user'
+                    },
+                    totalActiveCustomersData: {
+                        name: 'Logins',
+                        val: '',
+                        icon: 'repeat'
+                    },
+                    totalTransfersData: {
+                        name: 'Transfers',
+                        val: '',
+                        icon: 'exchange'
+                    },
+                    totalAmountTransferedData: {
+                        name: 'Transfer Amount',
+                        val: '',
+                        mxn: 0,
+                        icon: 'money'
+                    },
                     registeredCustomersData: {
                         name: 'New Registrations',
                         val: '',
@@ -162,26 +422,34 @@
                     }
                 },
                 donut_chart_data: {
-//                    registeredCustomersData: {
-//                        name: 'Registered Customers',
-//                        data: [{
-//                            name: 'United States',
-//                            y: 245
-//                        }, {
-//                            name: 'Mexico',
-//                            y: 913
-//                        }]
-//                    },
-//                    repeatCustomersData: {
-//                        name: 'Active Customers',
-//                        data: [{
-//                            name: 'United States',
-//                            y: 245
-//                        }, {
-//                            name: 'Mexico',
-//                            y: 913
-//                        }]
-//                    },
+                    totalTransfersData: {
+                        loading_data: true,
+                        name: 'Transfers',
+                        data: [{
+                            name: 'ATM Pickup',
+                            y: 0
+                        }, {
+                            name: 'Cash Pickup',
+                            y: 0
+                        }, {
+                            name: 'Bank Transfer',
+                            y: 0
+                        }]
+                    },
+                    totalAmountTransferedData: {
+                        loading_data: true,
+                        name: 'Transfer Amount',
+                        data: [{
+                            name: 'ATM Pickup',
+                            y: 0
+                        }, {
+                            name: 'Cash Pickup',
+                            y: 0
+                        }, {
+                            name: 'Bank Transfer',
+                            y: 0
+                        }]
+                    },
                     transfersData: {
                         loading_data: true,
                         name: 'Transfers',
@@ -232,10 +500,23 @@
                 /*
                     Blank out the data so that the loading spinner will display           
                 */
+                this.info_box_data.totalRegisteredCustomersData.val = '';
+                this.info_box_data.totalActiveCustomersData.val = '';
+                this.info_box_data.totalTransfersData.val = '';
+                this.info_box_data.totalAmountTransferedData.val = '';
+                
                 this.info_box_data.registeredCustomersData.val = '';
                 this.info_box_data.activeCustomersData.val = '';
                 this.info_box_data.transfersData.val = '';
                 this.info_box_data.amountTransferedData.val = '';
+                
+                this.donut_chart_data.totalTransfersData.data[0].y = ''; //total atm pickup
+                this.donut_chart_data.totalTransfersData.data[1].y = ''; //total cash pickup
+                this.donut_chart_data.totalTransfersData.data[2].y = ''; //total bank transfer
+
+                this.donut_chart_data.totalAmountTransferedData.data[0].y = ''; //total atm pickup
+                this.donut_chart_data.totalAmountTransferedData.data[1].y = ''; //total cash pickup
+                this.donut_chart_data.totalAmountTransferedData.data[2].y = ''; //total bank transfer
 
                 this.donut_chart_data.transfersData.data[0].y = ''; //atm pickup
                 this.donut_chart_data.transfersData.data[1].y = ''; //cash pickup
@@ -244,17 +525,38 @@
                 this.donut_chart_data.amountTransferedData.data[0].y = ''; //atm pickup
                 this.donut_chart_data.amountTransferedData.data[1].y = ''; //cash pickup
                 this.donut_chart_data.amountTransferedData.data[2].y = ''; //bank transfer
-
-                this.donut_chart_data.transfersData.loading_data = true;
-                this.donut_chart_data.amountTransferedData.loading_data = true;
+                
+                this.info_box_data.totalStatBreakdown.loading_data = true
+                
+                this.info_box_data.totalStatBreakdownRegistrations.loading_data = true
+                this.info_box_data.totalStatBreakdownLogins.loading_data = true
+                this.info_box_data.totalStatBreakdownTransfers.loading_data = true
+                this.info_box_data.totalStatBreakdownTransferAmount.loading_data = true
+                
+                this.info_box_data.statBreakdownRegistrations.loading_data = true
+                this.info_box_data.statBreakdownLogins.loading_data = true
+                this.info_box_data.statBreakdownTransfers.loading_data = true
+                this.info_box_data.statBreakdownTransferAmount.loading_data = true
                 
                 //For testing purposes
                 setTimeout( () => {
+                    this.info_box_data.totalRegisteredCustomersData.val = 2490;
+                    this.info_box_data.totalActiveCustomersData.val = 3300;
+                    this.info_box_data.totalTransfersData.val = 4098;
+                    this.info_box_data.totalAmountTransferedData.val = '$' + 109820;
                     
                     this.info_box_data.registeredCustomersData.val = 27;
                     this.info_box_data.activeCustomersData.val = 39;
                     this.info_box_data.transfersData.val = 9;
                     this.info_box_data.amountTransferedData.val = '$' + 768.35;
+                    
+                    this.donut_chart_data.totalTransfersData.data[0].y = 52; //total atm pickup
+                    this.donut_chart_data.totalTransfersData.data[1].y = 35; //total cash pickup
+                    this.donut_chart_data.totalTransfersData.data[2].y = 12; //total bank transfer
+
+                    this.donut_chart_data.totalAmountTransferedData.data[0].y = 300; //total atm pickup
+                    this.donut_chart_data.totalAmountTransferedData.data[1].y = 2987; //total cash pickup
+                    this.donut_chart_data.totalAmountTransferedData.data[2].y = 978; //total bank transfer
                     
                     this.donut_chart_data.transfersData.data[0].y = 6; //atm pickup
                     this.donut_chart_data.transfersData.data[1].y = 2; //cash pickup
@@ -264,9 +566,23 @@
                     this.donut_chart_data.amountTransferedData.data[1].y = 501.39999999999; //cash pickup
                     this.donut_chart_data.amountTransferedData.data[2].y = 216.32; //bank transfer
                     
-                    //Change the loading_data to false to display the new chart data
-                    this.donut_chart_data.transfersData.loading_data = false;
-                    this.donut_chart_data.amountTransferedData.loading_data = false;
+                    this.info_box_data.totalStatBreakdown.loading_data = false
+                    this.info_box_data.totalTransferBreakdown.loading_data = false
+                    this.info_box_data.totalTransferAmountBreakdown.loading_data = false
+                    
+                    this.info_box_data.statBreakdown.loading_data = false
+                    this.info_box_data.transferBreakdown.loading_data = false
+                    this.info_box_data.transferAmountBreakdown.loading_data = false
+                    
+                    this.info_box_data.totalStatBreakdownRegistrations.loading_data = false
+                    this.info_box_data.totalStatBreakdownLogins.loading_data = false
+                    this.info_box_data.totalStatBreakdownTransfers.loading_data = false
+                    this.info_box_data.totalStatBreakdownTransferAmount.loading_data = false
+                    
+                    this.info_box_data.statBreakdownRegistrations.loading_data = false
+                    this.info_box_data.statBreakdownLogins.loading_data = false
+                    this.info_box_data.statBreakdownTransfers.loading_data = false
+                    this.info_box_data.statBreakdownTransferAmount.loading_data = false
                     
                     console.log(this.customer_data);
                 }, 4000)
@@ -367,46 +683,79 @@
                 this.getCustomerData(new_start, new_end)
             },
             dateRange(){
-                let start = moment().subtract(8, 'days'),
-                    end = moment().subtract(1, 'days')
+                
+                setTimeout(() => {
+                    let start = moment().subtract(1, 'weeks').day(0),
+                        end = moment().subtract(1, 'weeks').day(6);
 
-                this.convertDateToEpoch(start, end)
-                
-                let this_vm = this;
-                
-                function updateDate(start, end){    
-                    jquery("#date_range").html(
-                        start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') +
-                        ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>'
-                    );   
-                }
+                    this.convertDateToEpoch(start, end)
 
-                jquery("#date_range").daterangepicker({
-                    opens: 'center',
-                    ranges: {
-                       'Today': [moment(), moment()],
-                       'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                       'Last 7 Days': [moment().subtract(8, 'days'), moment().subtract(1, 'days')],
-                       'Last 30 Days': [moment().subtract(30, 'days'), moment().subtract(1, 'days')],
-                       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    },
-                    startDate: start,
-                    endDate: end,
-                    maxDate: moment(),
-                    alwaysShowCalendars: true
-                }, updateDate(start, end));
-                
-                //When the user clicks on Apply from the date range picker
-                jquery('#date_range').on('apply.daterangepicker', function(ev, picker) {
+                    let this_vm = this;
+
+                    function updateDate(start, end){    
+                        jquery("#date_range").html(
+                            start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') +
+                            ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>'
+                        );
+                        
+                        jquery("#date_range2").html(
+                            start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY') +
+                            ' <span><i class="fa fa-chevron-down" style="float:right"></i></span>'
+                        );
+                    }
+
+                    jquery("#date_range").daterangepicker({
+                        opens: 'center',
+                        ranges: {
+                           'Today': [moment(), moment()],
+                           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                           'Last 7 Days': [moment().subtract(8, 'days'), moment().subtract(1, 'days')],
+                           'Last 30 Days': [moment().subtract(30, 'days'), moment().subtract(1, 'days')],
+                           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        startDate: start,
+                        endDate: end,
+                        maxDate: moment(),
+                        alwaysShowCalendars: true
+                    }, updateDate(start, end));
+
+                    //When the user clicks on Apply from the date range picker
+                    jquery('#date_range').on('apply.daterangepicker', function(ev, picker) {
+
+                        updateDate(picker.startDate, picker.endDate)
+                        this_vm.convertDateToEpoch(picker.startDate, picker.endDate)
+                    });
                     
-                    updateDate(picker.startDate, picker.endDate)
-                    this_vm.convertDateToEpoch(picker.startDate, picker.endDate)
-                });
+                    
+                    jquery("#date_range2").daterangepicker({
+                        opens: 'center',
+                        ranges: {
+                           'Today': [moment(), moment()],
+                           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                           'Last 7 Days': [moment().subtract(8, 'days'), moment().subtract(1, 'days')],
+                           'Last 30 Days': [moment().subtract(30, 'days'), moment().subtract(1, 'days')],
+                           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        startDate: start,
+                        endDate: end,
+                        maxDate: moment(),
+                        alwaysShowCalendars: true
+                    }, updateDate(start, end));
+
+                    //When the user clicks on Apply from the date range picker
+                    jquery('#date_range2').on('apply.daterangepicker', function(ev, picker) {
+
+                        updateDate(picker.startDate, picker.endDate)
+                        this_vm.convertDateToEpoch(picker.startDate, picker.endDate)
+                    });
+                }, 500)
+                
             }
         },
         components: {
             DonutChart,
             InfoBox,
+            OverviewStatBreakdown,
             CountriesUs,
             CountriesMx,
             OverviewAppRating,

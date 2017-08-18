@@ -4,6 +4,7 @@ import Landing from '@/main_pages/Landing'
 import CustomerFeedback from '@/main_pages/Customer-Feedback'
 import Errors from '@/main_pages/Errors'
 import Emails from '@/main_pages/Emails'
+import MobileDownload from '@/main_pages/Mobile-Download'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
             path: '/emails',
             name: 'Emails',
             component: Emails
+        },
+        {
+            path: '/mobile_download',
+            name: 'MobileDownload',
+            component: MobileDownload
         }
     ]
 })

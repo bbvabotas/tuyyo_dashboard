@@ -1,15 +1,12 @@
 <template>
 <div id="app">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
 <!--
-    <div class="live_ticker">
-        <div>Live (today)</div>
-        <div style="white-space: nowrap;">
-            <div class="ticker_animation">
-                <div class="ticker_item"><strong>Transfers: </strong>{{liveTransfersString}}</div><div class="ticker_item"><strong>Transfer Amount: </strong>${{liveTransferAmountString}}</div>
-                <div class="ticker_item"><strong>Transfers: </strong>{{liveTransfersString}}</div><div class="ticker_item"><strong>Transfer Amount: </strong>${{liveTransferAmountString}}</div>
-            </div>
-        </div>
+    <div class="row tuyyo_header">
+        <div class="col-sm-4" style="text-align:left;"><img :src="images.logoSrc" /></div>
+        <div class="col-sm-4"><img :src="images.logoTuyyo"></div>
+        <div class="col-sm-4"></div>
     </div>
 -->
     <div>
@@ -31,10 +28,19 @@
                 </div>
             </li>
             <li>
+                <div>
+                <router-link active-class="active-page" to="/mobile_download">
+                    <div><i class="fa fa-mobile fa-2x"></i><br>Mobile Download</div>
+                </router-link>
+                </div>
+            </li>
+<!--
+            <li>
                 <router-link active-class="active-page" to="/customer-feedback">
                     <div><i class="fa fa-comments-o fa-2x"></i><br>Customer Feedback</div>
                 </router-link>
             </li>
+-->
 <!--
             <li>
                 <router-link active-class="active-page" to="/errors">
@@ -107,9 +113,19 @@
         color: #2c3e50;
         background-color: white;
     }
+    
+    .row {
+        margin: 0;
+    }
 
     img {
         height: 40px;
+    }
+    
+    .tuyyo_header {
+        background-color: #072146;
+/*        height: 60px;*/
+        padding: 10px;
     }
 
     .nav_main a {
