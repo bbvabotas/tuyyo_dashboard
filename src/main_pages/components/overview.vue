@@ -18,10 +18,16 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <overview-app-rating :rating_data="icon.android"></overview-app-rating>
+                            <div style="border: 1px solid lightgray; border-radius: 5px">
+                                <overview-app-rating :rating_data="icon.android"></overview-app-rating>    
+                            </div>
+                            
                         </div>
                         <div class="col-sm-6">
-                            <overview-app-rating :rating_data="icon.ios"></overview-app-rating>
+                            <div style="border: 1px solid lightgray; border-radius: 5px">
+                                <overview-app-rating :rating_data="icon.ios"></overview-app-rating>
+                            </div>
+                            
                         </div>
                     </div>
                     <hr>
@@ -123,12 +129,15 @@
                     </div>
 -->
                    
+<!--
                     <div class="row">
                         <div class="col-sm-12">
                             <overview-live-data></overview-live-data>
                         </div>
                     </div>
+-->
                     
+<!--
                     <div class="row" style="width:90%; margin:auto">
                         <div class="col-sm-12">
                             <div class="row">
@@ -168,15 +177,132 @@
                         </div>
                         
                     </div>
+-->
                     
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div>Today</div>
+                            <div class="quick_stats">
+                                <div>
+                                    <i class="fa fa-user"></i> New Registrations <strong>2</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-child"></i> Logins <strong>12</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange"></i> Transfers <strong>20</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-money"></i> Transfer Amount <strong>$1,400</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div>Yesterday</div>
+                            <div class="quick_stats">
+                                <div>
+                                    <i class="fa fa-user"></i> New Registrations <strong>2</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-child"></i> Logins <strong>5</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange"></i> Transfers <strong>15</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-money"></i> Transfer Amount <strong>$470</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div>Last Week</div>
+                            <div class="quick_stats">
+                                <div>
+                                    <i class="fa fa-user"></i> New Registrations <strong>27</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-child"></i> Logins <strong>39</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange"></i> Transfers <strong>9</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-money"></i> Transfer Amount <strong>$768.35</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div>All Time</div>
+                            <div class="quick_stats">
+                                <div>
+                                    <i class="fa fa-user"></i> New Registrations <strong>10,100</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-child"></i> Logins <strong>100,120</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange"></i> Transfers <strong>200,563</strong>
+                                </div>
+                                <div>
+                                    <i class="fa fa-money"></i> Transfer Amount <strong>$100,000,000</strong>
+                                </div>
+                            </div>
+                        </div>
+<!--
+                        <div class="col-sm-12">
+                            <div>
+                                <div>
+                                    <h4>Quick Stats</h4>
+                                </div>
+                                <div style="border:1px solid gray; border-radius:5px; padding:30px 20px 20px 10px;">
+                                    <ul class="quick_stats">
+                                        <li><strong>Today</strong></li>
+                                        <ul class="fa-ul">
+                                            <li><i class="fa-li fa fa-user"></i> New Registrations <strong>100</strong></li>
+                                            <li><i class="fa-li fa fa-child"></i> Logins <strong>120</strong></li>
+                                            <li><i class="fa-li fa fa-exchange"></i> Transfers <strong>563</strong></li>
+                                            <li><i class="fa-li fa fa-money"></i> Transfer Amount <strong>$50,000</strong></li>
+                                        </ul>
+                                        <li><strong>Yesterday</strong></li>
+                                        <ul class="fa-ul">
+                                            <li><i class="fa-li fa fa-user"></i> New Registrations <strong>2</strong></li>
+                                            <li><i class="fa-li fa fa-child"></i> Logins <strong>5</strong></li>
+                                            <li><i class="fa-li fa fa-exchange"></i> Transfers <strong>15</strong></li>
+                                            <li><i class="fa-li fa fa-money"></i> Transfer Amount <strong>$470</strong></li>
+                                        </ul>
+                                        <li><strong>Last Week</strong></li>
+                                        <ul class="fa-ul">
+                                            <li><i class="fa-li fa fa-user"></i> New Registrations <strong>27</strong></li>
+                                            <li><i class="fa-li fa fa-child"></i> Logins <strong>39</strong></li>
+                                            <li><i class="fa-li fa fa-exchange"></i> Transfers <strong>9</strong></li>
+                                            <li><i class="fa-li fa fa-money"></i> Transfer Amount <strong>$768.35</strong></li>
+                                        </ul>
+                                        <li><strong>All Time</strong></li>
+                                        <ul class="fa-ul">
+                                            <li><i class="fa-li fa fa-user"></i> New Registrations <strong>10,100</strong></li>
+                                            <li><i class="fa-li fa fa-child"></i> Logins <strong>100,120</strong></li>
+                                            <li><i class="fa-li fa fa-exchange"></i> Transfers <strong>200,563</strong></li>
+                                            <li><i class="fa-li fa fa-money"></i> Transfer Amount <strong>$100,000,000</strong></li>
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+-->
+                    </div>
                     
-                    
-                    <div class="row" style="width:90%; margin:auto">
+                    <div class="row">
                         
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-12">
+                                    <overview-live-data></overview-live-data>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <h4>Date Range</h4>
+                                    <div><i>last week</i></div>
                                     <div id="date_range" class="date_range_wrapper"></div>
                                 </div>
                             </div>
@@ -211,25 +337,27 @@
                                     <overview-stat-breakdown :breakdown_data="info_box_data.transferAmountBreakdown"></overview-stat-breakdown>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-5 countries">
+                                    <countries-us></countries-us>
+                                </div>
+                                <div class="col-sm-2 countries">
+                                    <div class="countries-transfers">
+                                        <div>Transfers: 312</div>
+                                        <div><i class="fa fa-long-arrow-right fa-5x"></i></div>
+                                        <div>Transfer Amount: $2,765</div>
+                                    </div>
 
-                    <div class="row">
-                        <div class="col-sm-5 countries">
-                            <countries-us></countries-us>
-                        </div>
-                        <div class="col-sm-2 countries">
-                            <div class="countries-transfers">
-                                <div>Transfers: 312</div>
-                                <div><i class="fa fa-long-arrow-right fa-5x"></i></div>
-                                <div>Transfer Amount: $2,765</div>
+                                </div>
+                                <div class="col-sm-5 countries">
+                                    <countries-mx></countries-mx>
+                                </div>
                             </div>
-
-                        </div>
-                        <div class="col-sm-5 countries">
-                            <countries-mx></countries-mx>
                         </div>
                     </div>
+
+                    
                     <hr>
                     
                     <div class="row">
@@ -707,11 +835,10 @@
                     jquery("#date_range").daterangepicker({
                         opens: 'center',
                         ranges: {
-                           'Today': [moment(), moment()],
-                           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                           'Last 7 Days': [moment().subtract(8, 'days'), moment().subtract(1, 'days')],
-                           'Last 30 Days': [moment().subtract(30, 'days'), moment().subtract(1, 'days')],
-                           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                            'Today': [moment(), moment()],
+                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Last Week': [moment().subtract(1, 'weeks').day(0), moment().subtract(1, 'weeks').day(6)],
+                            'All Time': [moment().subtract(1, 'month'), moment()]
                         },
                         startDate: start,
                         endDate: end,
@@ -812,11 +939,27 @@
     .date_range_wrapper {
         background: #fff;
         cursor: pointer;
-        padding: 5px 10px;
+        padding: 6px 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         width: 300px;
         margin: auto;
-        
+        display: inline-block;
+    }
+    
+    .quick_stats {
+        text-align: left;
+        border: 1px solid gray;
+        border-radius: 5px;
+/*        background-color: #d9e6f2;*/
+/*        padding: 10px;*/
+    }
+    
+    .quick_stats div {
+        margin: 10px;
+    }
+    
+    .quick_stats strong {
+        float: right;
     }
 </style>

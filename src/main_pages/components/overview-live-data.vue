@@ -1,11 +1,11 @@
 <template>
     <div class=live_ticker_wrapper>
-        <div style="padding: 10px 0"><strong>Live</strong><div style="font-size:0.8em; font-style: italic">today</div></div>
+        <div style="padding: 10px 0"><strong>Today</strong><div style="font-size:0.8em; font-style: italic">live</div></div>
         <div class="live_ticker">
             <div style="white-space: nowrap;">
                 <div class="ticker_animation">
                     <div class="ticker_item registered_customers_width">
-                        <i class="fa fa-user"></i> <strong>Registered Customers: </strong>{{ liveRegisteredCustomersAnimated }}
+                        <i class="fa fa-user"></i> <strong>New Registrations: </strong>{{ liveRegisteredCustomersAnimated }}
                     </div>
                     <div class="ticker_item active_customers_width">
                         <i class="fa fa-child"></i> <strong>Logins: </strong>{{ liveLoginsAnimated }}
@@ -17,7 +17,7 @@
                         <i class="fa fa-money"></i> <strong>Transfer Amount: </strong>${{liveTransferAmountAnimated}}
                     </div>
                     <div class="ticker_item registered_customers_width">
-                        <i class="fa fa-user"></i> <strong>Registered Customers: </strong>{{ liveRegisteredCustomersAnimated }}
+                        <i class="fa fa-user"></i> <strong>New Registrations: </strong>{{ liveRegisteredCustomersAnimated }}
                     </div>
                     <div class="ticker_item active_customers_width">
                         <i class="fa fa-child"></i> <strong>Logins: </strong>{{ liveLoginsAnimated }}

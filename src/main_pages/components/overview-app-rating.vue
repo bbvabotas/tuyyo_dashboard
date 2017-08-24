@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
-                <div class="col-sm-12">
-                    <img class="icon_size" :src="determinePlatformIcon">
+                <div class="col-sm-12" style="font-size:2em;">
+                    <img class="icon_size" :src="determinePlatformIcon"> {{ platform_name }}
                 </div>
             </div>
             <div class="row">
@@ -36,11 +36,17 @@
                     iconAndroid: require("assets/img/icon_android.png"),
                     iconIOS: require("assets/img/icon_ios.svg")
                 },
+                platform_name: '',
                 options: this.calculateChart()
             }
         },
         computed: {
             determinePlatformIcon(){
+                if(this.rating_data == 'iconAndroid'){
+                    this.platform_name = 'Android'
+                } else if(this.rating_data == 'iconIOS'){
+                    this.platform_name = 'iOS'
+                }
                 return this.icons[this.rating_data]
             }  
         },
@@ -126,7 +132,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .icon_size {
-        height: 50px;
+        height: 80px;
 /*        padding: 10px;*/
     }
     .align_middle {

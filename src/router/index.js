@@ -9,6 +9,7 @@ import MobileDownload from '@/main_pages/Mobile-Download'
 Vue.use(Router)
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/',

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    
+    import OverviewStatBreakdown from './overview-stat-breakdown'
     export default {
         //name: 'info-box',
         props: ['info_data']

@@ -5,7 +5,7 @@
     </div>
 -->
     <div v-if="!breakdown_data.loading_data">
-        <highcharts :options="options" style="height:200px"></highcharts>
+        <highcharts :options="options" style="height:200px;"></highcharts>
     </div>
 </template>
 

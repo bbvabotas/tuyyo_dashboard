@@ -14,7 +14,7 @@
         
         <div class="row">
             <div>
-                Download the mobile version of the Tuyyo dashboard so that you can see the dashboard anytime and anywhere on your phone
+                Download the mobile version of the Tuyyo dashboard from this page so that you can see the dashboard anytime and anywhere on your phone
             </div>
         </div>
         

@@ -22,16 +22,16 @@
             </li>
             <li>
                 <div>
-                <router-link active-class="active-page" to="/overview">
-                    <div><i class="fa fa-tachometer fa-2x"></i><br>Dashboard</div>
-                </router-link>
+                    <router-link active-class="active-page" to="/overview">
+                        <div><i class="fa fa-tachometer fa-2x"></i><br>Dashboard</div>
+                    </router-link>
                 </div>
             </li>
             <li>
                 <div>
-                <router-link active-class="active-page" to="/mobile_download">
-                    <div><i class="fa fa-mobile fa-2x"></i><br>Mobile Download</div>
-                </router-link>
+                    <router-link active-class="active-page" to="/mobile_download">
+                        <div><i class="fa fa-mobile fa-2x"></i><br>Mobile Download</div>
+                    </router-link>
                 </div>
             </li>
 <!--
@@ -133,7 +133,6 @@
     }
 
     .nav_main a:hover {
-/*        color: #b6bec8;*/
         color: white;
     }
 
